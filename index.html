@@ -1,13 +1,15 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>Nuestra historia</title>
+
 
     <style>
 
@@ -36,6 +38,7 @@
            ========================= */
 
         #aviso-orientacion {
+
             position: fixed;
             inset: 0;
 
@@ -69,6 +72,7 @@
            ========================= */
 
         .telefono-contenedor {
+
             width: 90px;
             height: 120px;
 
@@ -81,6 +85,7 @@
 
 
         .telefono {
+
             width: 58px;
             height: 100px;
 
@@ -98,6 +103,7 @@
         /* Cámara / altavoz */
 
         .telefono::before {
+
             content: "";
 
             position: absolute;
@@ -119,6 +125,7 @@
         /* Botón inferior */
 
         .telefono::after {
+
             content: "";
 
             position: absolute;
@@ -163,6 +170,7 @@
            ========================= */
 
         .titulo-orientacion {
+
             font-size: clamp(22px, 6vw, 32px);
 
             font-weight: bold;
@@ -174,6 +182,7 @@
 
 
         .subtitulo-orientacion {
+
             margin-top: 8px;
 
             font-size: clamp(14px, 4vw, 18px);
@@ -189,6 +198,7 @@
            ========================= */
 
         #contenido {
+
             width: 100%;
             height: 100%;
 
@@ -196,6 +206,29 @@
 
             align-items: center;
             justify-content: center;
+        }
+
+
+        /* =========================
+           GIFS DE INICIO
+           ========================= */
+
+        .gif-inicio {
+
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            background: #0a0512;
+
+            display: none;
+
+            z-index: 5000;
         }
 
 
@@ -233,6 +266,7 @@
         }
 
     </style>
+
 </head>
 
 
@@ -240,7 +274,7 @@
 
 
     <!-- =====================================
-         AVISO DE GIRAR LA PANTALLA
+         AVISO DE GIRAR PANTALLA
          ===================================== -->
 
     <div id="aviso-orientacion">
@@ -261,8 +295,21 @@
             <div class="subtitulo-orientacion">
                 para comenzar nuestra historia
             </div>
-       
-                <!-- =====================================
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         CONTENIDO PRINCIPAL
+         ===================================== -->
+
+    <div id="contenido">
+    </div>
+
+
+    <!-- =====================================
          GIFS DE INICIO
          ===================================== -->
 
@@ -273,35 +320,53 @@
         alt="Nuestra historia"
     >
 
+
     <img
         id="gif-2"
         class="gif-inicio"
         src="img/2-.gif"
         alt="Nuestra historia"
     >
-        <script>
+
+
+    <!-- =====================================
+         JAVASCRIPT
+         ===================================== -->
+
+    <script>
 
         const gif1 = document.getElementById("gif-1");
         const gif2 = document.getElementById("gif-2");
 
         let inicioMostrado = false;
 
+
         function comprobarOrientacion() {
 
-            if (window.innerWidth > window.innerHeight && !inicioMostrado) {
+            if (
+                window.innerWidth > window.innerHeight
+                &&
+                !inicioMostrado
+            ) {
 
                 inicioMostrado = true;
 
-                // Mostrar primer GIF
+
+                /* =========================
+                   MOSTRAR GIF 1
+                   ========================= */
+
                 gif1.style.display = "block";
 
-                // Después de 7 segundos
-                setTimeout(() => {
 
-                    // Ocultar primer GIF
+                /* =========================
+                   DESPUÉS DE 7 SEGUNDOS
+                   ========================= */
+
+                setTimeout(function() {
+
                     gif1.style.display = "none";
 
-                    // Mostrar segundo GIF
                     gif2.style.display = "block";
 
                 }, 7000);
@@ -310,7 +375,33 @@
 
         }
 
+
+        /* Comprobar orientación al cargar */
+
         comprobarOrientacion();
+
+
+        /* Comprobar cuando cambia el tamaño */
+
+        window.addEventListener(
+            "resize",
+            comprobarOrientacion
+        );
+
+
+        /* Comprobar cuando gira el teléfono */
+
+        window.addEventListener(
+            "orientationchange",
+            comprobarOrientacion
+        );
+
+    </script>
+
+
+</body>
+
+</html>
 
         window.addEventListener("resize", comprobarOrientacion);
         window.addEventListener("orientationchange", comprobarOrientacion);
