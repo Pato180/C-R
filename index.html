@@ -100,8 +100,6 @@
         }
 
 
-        /* Cámara / altavoz */
-
         .telefono::before {
 
             content: "";
@@ -121,8 +119,6 @@
             background: #a06fd6;
         }
 
-
-        /* Botón inferior */
 
         .telefono::after {
 
@@ -217,10 +213,14 @@
 
             position: fixed;
 
-            inset: 0;
+            top: 0;
+            left: 0;
 
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
+
+            width: 100dvw;
+            height: 100dvh;
 
             object-fit: contain;
 
@@ -233,7 +233,7 @@
 
 
         /* =========================
-           SOLO EN CELULAR VERTICAL
+           CELULAR VERTICAL
            ========================= */
 
         @media (orientation: portrait) and (max-width: 900px) {
@@ -250,7 +250,7 @@
 
 
         /* =========================
-           EN HORIZONTAL
+           PANTALLA HORIZONTAL
            ========================= */
 
         @media (orientation: landscape) {
@@ -305,26 +305,29 @@
          CONTENIDO PRINCIPAL
          ===================================== -->
 
-    <div id="contenido">
-    </div>
+    <div id="contenido"></div>
 
 
     <!-- =====================================
-         GIFS DE INICIO
+         GIF 1
          ===================================== -->
 
     <img
         id="gif-1"
         class="gif-inicio"
-        src="img/1-.gif"
+        src="./img/1-.gif"
         alt="Nuestra historia"
     >
 
 
+    <!-- =====================================
+         GIF 2
+         ===================================== -->
+
     <img
         id="gif-2"
         class="gif-inicio"
-        src="img/2-.gif"
+        src="./img/2-.gif"
         alt="Nuestra historia"
     >
 
@@ -341,60 +344,98 @@
         let inicioMostrado = false;
 
 
-        function comprobarOrientacion() {
+        /* =====================================
+           COMPROBAR SI ESTÁ HORIZONTAL
+           ===================================== */
 
-            if (
-                window.innerWidth > window.innerHeight
-                &&
-                !inicioMostrado
-            ) {
+        function estaHorizontal() {
 
-                inicioMostrado = true;
-
-
-                /* =========================
-                   MOSTRAR GIF 1
-                   ========================= */
-
-                gif1.style.display = "block";
-
-
-                /* =========================
-                   DESPUÉS DE 7 SEGUNDOS
-                   ========================= */
-
-                setTimeout(function() {
-
-                    gif1.style.display = "none";
-
-                    gif2.style.display = "block";
-
-                }, 7000);
-
-            }
+            return window.matchMedia(
+                "(orientation: landscape)"
+            ).matches;
 
         }
 
 
-        /* Comprobar orientación al cargar */
+        /* =====================================
+           INICIAR HISTORIA
+           ===================================== */
 
-        comprobarOrientacion();
+        function iniciarHistoria() {
+
+            if (!estaHorizontal()) {
+                return;
+            }
+
+            if (inicioMostrado) {
+                return;
+            }
+
+            inicioMostrado = true;
 
 
-        /* Comprobar cuando cambia el tamaño */
+            /* =========================
+               MOSTRAR GIF 1
+               ========================= */
 
-        window.addEventListener(
-            "resize",
-            comprobarOrientacion
-        );
+            gif1.style.display = "block";
 
 
-        /* Comprobar cuando gira el teléfono */
+            /* =========================
+               DESPUÉS DE 7 SEGUNDOS
+               ========================= */
+
+            setTimeout(function() {
+
+                gif1.style.display = "none";
+
+                gif2.style.display = "block";
+
+            }, 7000);
+
+        }
+
+
+        /* =====================================
+           COMPROBAR AL CARGAR
+           ===================================== */
+
+        iniciarHistoria();
+
+
+        /* =====================================
+           COMPROBAR CUANDO CAMBIA ORIENTACIÓN
+           ===================================== */
 
         window.addEventListener(
             "orientationchange",
-            comprobarOrientacion
+            function() {
+
+                setTimeout(
+                    iniciarHistoria,
+                    300
+                );
+
+            }
         );
+
+
+        /* =====================================
+           COMPROBAR CUANDO CAMBIA EL TAMAÑO
+           ===================================== */
+
+        window.addEventListener(
+            "resize",
+            function() {
+
+                setTimeout(
+                    iniciarHistoria,
+                    300
+                );
+
+            }
+        );
+
 
     </script>
 
@@ -402,8 +443,3 @@
 </body>
 
 </html>
-
-        window.addEventListener("resize", comprobarOrientacion);
-        window.addEventListener("orientationchange", comprobarOrientacion);
-
-    </script>
