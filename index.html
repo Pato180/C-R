@@ -8,7 +8,6 @@
   :root{
     --morado:#a06fd6;
     --turquesa:#4fd1c5;
-    --neutro:#cfc6dd;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{
@@ -23,7 +22,6 @@
   #juego{
     position:absolute; inset:0;
     display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
   }
   #marco{
     position:relative;
@@ -32,116 +30,51 @@
     max-height:100%;
     overflow:hidden;
     background:#000;
+    transition:opacity .5s ease;
   }
+  #marco.fundido{opacity:0;}
 
-  /* ---- imagen / gif de fondo ---- */
   #fondo{
     position:absolute; inset:0;
     width:100%; height:100%;
     object-fit:contain;
     display:block;
-    transition:opacity .5s ease;
   }
-  #marco.fundido #fondo,
-  #marco.fundido #caja,
-  #marco.fundido #botones,
-  #marco.fundido #texto-negro{opacity:0;}
 
-  /* ---- cuadro de diálogo ---- */
-  #caja{
-    position:absolute;
-    left:6%; right:6%; bottom:7%;
-    padding:3% 4%;
-    background:rgba(20,12,32,0.82);
-    border:2px solid var(--neutro);
-    border-radius:14px;
-    color:#fff;
-    font-size:clamp(14px, 2.4vw, 26px);
-    line-height:1.5;
-    backdrop-filter:blur(3px);
-    transition:opacity .5s ease;
-  }
-  #caja.camila{border-color:var(--morado); box-shadow:0 0 18px rgba(160,111,214,.45);}
-  #caja.lady{border-color:var(--turquesa); box-shadow:0 0 18px rgba(79,209,197,.45);}
-  #caja.oculto{display:none;}
-  #nombre{
-    display:block;
-    font-weight:bold;
-    letter-spacing:1px;
-    margin-bottom:.4em;
-    font-size:.85em;
-  }
-  #nombre.camila{color:var(--morado);}
-  #nombre.lady{color:var(--turquesa);}
-  #flecha{
-    position:absolute; right:3%; bottom:8%;
-    color:var(--neutro);
-    font-size:.8em;
-    animation:flotar 1s ease-in-out infinite;
-  }
-  @keyframes flotar{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
-
-  /* ---- pantalla negra con texto typewriter ---- */
-  #texto-negro{
+  /* ---- pantalla de texto automática (sin imagen) ---- */
+  #texto-auto{
     position:absolute; inset:0;
     display:none;
     align-items:center; justify-content:center;
-    background:#000;
-    padding:10%;
     text-align:center;
-    color:#f0e8f8;
-    font-size:clamp(15px, 2.6vw, 30px);
-    line-height:1.7;
+    padding:10%;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(160,111,214,.35), transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(79,209,197,.35), transparent 55%),
+      linear-gradient(160deg,#0a0512 0%,#160c26 50%,#0d1f24 100%);
+  }
+  #texto-auto.visible{display:flex;}
+  #texto-auto p{
+    color:#f2ecfa;
     font-style:italic;
-    transition:opacity .5s ease;
+    font-size:clamp(16px, 3vw, 32px);
+    line-height:1.6;
+    text-shadow:0 0 14px rgba(160,111,214,.5);
   }
-  #texto-negro.visible{display:flex;}
-  .cursor{
-    display:inline-block;
-    width:.08em; height:1.1em;
-    background:#f0e8f8;
-    margin-left:3px;
-    vertical-align:text-bottom;
-    animation:parpadeo .7s steps(1) infinite;
-  }
-  @keyframes parpadeo{0%,50%{opacity:1;}51%,100%{opacity:0;}}
 
-  /* ---- botones de decisión ---- */
-  #botones{
+  /* ---- botones invisibles sobre las imágenes ---- */
+  .hitbox{
     position:absolute;
-    left:8%; right:8%; bottom:26%;
-    display:none;
-    flex-direction:column;
-    gap:2.5vh;
-    align-items:center;
-    transition:opacity .5s ease;
-  }
-  #botones.visible{display:flex;}
-  .btn{
-    width:min(90%, 620px);
-    padding:1.1em 1.4em;
-    background:rgba(20,12,32,0.88);
-    border:2px solid var(--neutro);
-    border-radius:12px;
-    color:#fff;
-    font-family:inherit;
-    font-size:clamp(13px, 2.1vw, 22px);
     cursor:pointer;
-    transition:transform .15s ease, box-shadow .25s ease, background .25s ease;
+    background:rgba(255,0,0,0);      /* invisible en producción */
+    border:2px solid rgba(255,0,0,0); /* invisible en producción */
   }
-  .btn.principal{border-color:var(--turquesa);}
-  .btn.principal:hover,.btn.principal:active{
-    background:rgba(79,209,197,.2);
-    box-shadow:0 0 22px rgba(79,209,197,.5);
-    transform:scale(1.03);
-  }
-  .btn.secundario:hover,.btn.secundario:active{
-    background:rgba(160,111,214,.18);
-    box-shadow:0 0 18px rgba(160,111,214,.4);
-    transform:scale(1.03);
+  body.debug .hitbox{
+    background:rgba(255,60,60,.25);
+    border:2px solid rgba(255,60,60,.8);
   }
 
-  /* ---- aviso de girar el teléfono ---- */
+  /* ---- aviso de girar el teléfono (solo 5 segundos) ---- */
   #girar{
     position:fixed; inset:0;
     display:none;
@@ -154,21 +87,19 @@
     padding:32px;
     font-size:18px;
     z-index:99;
+    transition:opacity .4s ease;
   }
+  #girar.mostrar{display:flex;}
   #girar svg{animation:girarIcono 2s ease-in-out infinite;}
   @keyframes girarIcono{
     0%,40%{transform:rotate(0);}
     60%,100%{transform:rotate(-90deg);}
   }
-  @media (orientation:portrait) and (max-width:900px){
-    #girar{display:flex;}
-    #juego{display:none;}
-  }
 </style>
 </head>
 <body>
 
-<!-- ============ AVISO DE ORIENTACIÓN ============ -->
+<!-- ============ AVISO DE ORIENTACIÓN (5 segundos) ============ -->
 <div id="girar">
   <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#a06fd6" stroke-width="1.6">
     <rect x="7" y="2" width="10" height="20" rx="2"/>
@@ -178,116 +109,109 @@
 </div>
 
 <!-- ============ JUEGO ============ -->
-<div id="juego" onclick="avanzar()">
+<div id="juego">
   <div id="marco">
-    <img id="fondo" alt="">
-    <div id="texto-negro"><span id="tw"></span><span class="cursor"></span></div>
-    <div id="caja">
-      <span id="nombre"></span>
-      <span id="dialogo"></span>
-      <span id="flecha">▼</span>
-    </div>
-    <div id="botones"></div>
+    <img id="fondo" alt="" style="display:none;">
+    <div id="texto-auto"><p id="texto-auto-p"></p></div>
+    <div id="capa-botones"></div>
   </div>
 </div>
 
 <script>
 /* ==========================================================
-   AQUÍ EDITAS TODO. Cada objeto de la lista es una escena.
+   PARA ACTIVAR EL MODO DE CALIBRACIÓN (ver los botones en rojo
+   mientras ajustas las posiciones), cambia esta línea a true.
+   Déjala en false antes de publicar la versión final.
+   ========================================================== */
+const DEBUG_BOTONES = false;
+if(DEBUG_BOTONES) document.body.classList.add('debug');
 
-   Tipos de escena:
-     tipo:"imagen" -> muestra img + cuadro de diálogo
-     tipo:"negro"  -> pantalla negra con texto typewriter
-     tipo:"opcion" -> muestra img + pregunta + botones
+/* ==========================================================
+   AQUÍ EDITAS TODO. Cada objeto es una pantalla.
 
-   Campos:
-     img      -> ruta del archivo (ej. "img/escena01.gif")
-     quien    -> "camila" | "lady" | null  (null = narración/pensamiento)
-     texto    -> lo que dice el cuadro
-     opciones -> solo en tipo "opcion": [{texto, ir, estilo}]
-                 "ir" es el índice de la escena a la que salta
+   tipo:"auto"
+     texto     -> el texto que aparece (editable)
+     duracion  -> milisegundos que permanece antes de avanzar sola
+     ir        -> índice de la escena a la que salta
+
+   tipo:"espera"
+     img       -> ruta de la imagen (debe ser 1920x1080)
+     botones   -> lista de zonas invisibles clicables:
+                  { top, left, width, height }  <- en % de la imagen
+                  ir -> índice de la escena a la que salta al tocar ahí
    ========================================================== */
 
 const ESCENAS = [
 
-  // 0 — PANTALLA DE INICIO
+  // 0 — Pantalla de bienvenida (7 segundos, sin imagen)
   {
-    tipo:"opcion",
-    img:"img/inicio.png",
-    texto:"",
-    opciones:[
-      { texto:"EMPEZAR ♡", ir:1, estilo:"principal" }
+    tipo:"auto",
+    texto:"Este juego fue hecho con mucho amor para ti. Espero que te guste. 💜",
+    duracion:7000,
+    ir:1
+  },
+
+  // 1 — Menú principal: "Feliz cumple mes, mi vida"
+  {
+    tipo:"espera",
+    img:"img/menu-inicio.png",
+    botones:[
+      // INICIAR PARTIDA
+      { top:59.0, left:38.5, width:27.0, height:5.0, ir:3 },
+      // SALIR
+      { top:64.5, left:38.5, width:10.5, height:5.0, ir:2 }
     ]
   },
 
-  // 1 — ESCENA 01: Antes de todo
+  // 2 — Pantalla de salida ("Intenta jugarlo por fis...")
   {
-    tipo:"imagen",
-    img:"img/escena01.gif",
-    quien:null,
-    texto:"Estoy muy nerviosa, ni siquiera sé por qué… pero de seguro todo sale bien."
-  },
-
-  // 2 — TRANSICIÓN en negro (typewriter)
-  {
-    tipo:"negro",
-    texto:"Aún llena de nervios, decidí salir contigo, y fue la mejor decisión que pude tomar."
-  },
-
-  // 3 — ESCENA 02: El primer encuentro
-  {
-    tipo:"imagen",
-    img:"img/escena02.gif",
-    quien:null,
-    texto:"Luego de vernos, todo fue pasando como si hubiera estado destinado desde el inicio."
-  },
-
-  // 4 — ESCENA 03: ¿Seguimos?
-  {
-    tipo:"opcion",
-    img:"img/escena03.gif",
-    quien:"lady",
-    texto:"¿Segura que quieres continuar?",
-    opciones:[
-      { texto:"Sí, continuar", ir:5, estilo:"principal" },
-      { texto:"Prefiero dejarlo y nunca conocer al amor de mi vida", ir:4, estilo:"secundario" }
+    tipo:"espera",
+    img:"img/menu-salir.png",
+    botones:[
+      // VOLVER AL INICIO -> regresa a la pantalla de bienvenida (índice 0)
+      { top:58.5, left:27.0, width:29.5, height:5.5, ir:0 }
     ]
   },
 
-  // 5 — ESCENA 04: La propuesta
+  // 3 — "Holi, mi amor..." con botón PLAY
   {
-    tipo:"imagen",
-    img:"img/escena04.gif",
-    quien:"lady",
-    texto:"¿Quieres ser mi novia?"
-  },
-
-  // 6 — ESCENA 05: La decisión
-  {
-    tipo:"opcion",
-    img:"img/escena05.gif",
-    quien:null,
-    texto:"¿Qué contestará?",
-    opciones:[
-      { texto:"Sí, quiero", ir:7, estilo:"principal" },
-      { texto:"No, gracias", ir:6, estilo:"secundario" }
+    tipo:"espera",
+    img:"img/menu-play.png",
+    botones:[
+      // PLAY
+      { top:79.5, left:36.5, width:13.0, height:10.0, ir:4 }
     ]
   },
 
-  // 7 — ESCENA 06: Sí, quiero
+  // 4 — Menú de tres opciones: Cartita / Sorpresa / Carrusel
   {
-    tipo:"imagen",
-    img:"img/escena06.gif",
-    quien:"camila",
-    texto:"Sí, quiero."
+    tipo:"espera",
+    img:"img/menu-opciones.png",
+    botones:[
+      { top:68.5, left:13.0, width:15.0, height:7.5, ir:5 }, // Cartita
+      { top:68.5, left:42.5, width:14.5, height:7.5, ir:6 }, // Sorpresa
+      { top:68.5, left:71.5, width:14.5, height:7.5, ir:7 }  // Carrusel
+    ]
   },
 
-  // 8 — ESCENA 07: Lo que realmente quería decir
+  // 5, 6, 7 — Placeholders: aquí conectamos cada opción a su contenido
   {
-    tipo:"imagen",
-    img:"img/escena07.gif",
-    quien:"camila",
-    texto:"La verdad, nunca dudé en aceptar ser tu novia. Y me hubiera gustado que a ti te hubiera salido así de bonito, tal como lo planeaste."
+    tipo:"auto",
+    texto:"(Aquí va el contenido de \"Cartita\" — pendiente)",
+    duracion:99999999,
+    ir:4
+  },
+  {
+    tipo:"auto",
+    texto:"(Aquí va el contenido de \"Sorpresa\" — pendiente)",
+    duracion:99999999,
+    ir:4
+  },
+  {
+    tipo:"auto",
+    texto:"(Aquí va el contenido de \"Carrusel\" — pendiente)",
+    duracion:99999999,
+    ir:4
   }
 
 ];
@@ -297,76 +221,45 @@ const ESCENAS = [
    ========================================================== */
 
 let actual = 0;
-let escribiendo = false;
 let bloqueado = false;
+let temporizador = null;
 
 const marco   = document.getElementById('marco');
 const fondo   = document.getElementById('fondo');
-const caja    = document.getElementById('caja');
-const nombreE = document.getElementById('nombre');
-const dialogo = document.getElementById('dialogo');
-const flecha  = document.getElementById('flecha');
-const negro   = document.getElementById('texto-negro');
-const tw      = document.getElementById('tw');
-const botones = document.getElementById('botones');
-
-const NOMBRES = { camila:"CAMILA", lady:"LADY" };
+const textoAuto = document.getElementById('texto-auto');
+const textoAutoP = document.getElementById('texto-auto-p');
+const capaBotones = document.getElementById('capa-botones');
 
 function pintar(i){
   const e = ESCENAS[i];
   actual = i;
 
-  botones.classList.remove('visible');
-  botones.innerHTML = '';
-  negro.classList.remove('visible');
-  caja.classList.add('oculto');
-  caja.classList.remove('camila','lady');
-  nombreE.classList.remove('camila','lady');
+  clearTimeout(temporizador);
+  capaBotones.innerHTML = '';
+  textoAuto.classList.remove('visible');
+  fondo.style.display = 'none';
 
-  if(e.tipo === "negro"){
-    fondo.removeAttribute('src');
-    negro.classList.add('visible');
-    typewriter(e.texto);
+  if(e.tipo === "auto"){
+    textoAutoP.textContent = e.texto;
+    textoAuto.classList.add('visible');
+    temporizador = setTimeout(()=>ir(e.ir), e.duracion);
     return;
   }
 
-  if(e.img) fondo.src = e.img;
-
-  if(e.texto){
-    caja.classList.remove('oculto');
-    if(e.quien){
-      caja.classList.add(e.quien);
-      nombreE.classList.add(e.quien);
-      nombreE.textContent = NOMBRES[e.quien];
-    } else {
-      nombreE.textContent = '';
-    }
-    dialogo.textContent = e.texto;
-  }
-
-  if(e.tipo === "opcion"){
-    flecha.style.display = 'none';
-    e.opciones.forEach(op=>{
-      const b = document.createElement('button');
-      b.className = 'btn ' + (op.estilo || 'secundario');
-      b.textContent = op.texto;
-      b.onclick = (ev)=>{ ev.stopPropagation(); ir(op.ir); };
-      botones.appendChild(b);
+  if(e.tipo === "espera"){
+    fondo.src = e.img;
+    fondo.style.display = 'block';
+    e.botones.forEach(b=>{
+      const zona = document.createElement('div');
+      zona.className = 'hitbox';
+      zona.style.top = b.top + '%';
+      zona.style.left = b.left + '%';
+      zona.style.width = b.width + '%';
+      zona.style.height = b.height + '%';
+      zona.onclick = ()=>ir(b.ir);
+      capaBotones.appendChild(zona);
     });
-    botones.classList.add('visible');
-  } else {
-    flecha.style.display = '';
   }
-}
-
-function typewriter(txt){
-  escribiendo = true;
-  tw.textContent = '';
-  let k = 0;
-  const t = setInterval(()=>{
-    tw.textContent += txt[k++];
-    if(k >= txt.length){ clearInterval(t); escribiendo = false; }
-  }, 55);
 }
 
 function ir(i){
@@ -380,17 +273,21 @@ function ir(i){
   }, 500);
 }
 
-function avanzar(){
-  const e = ESCENAS[actual];
-  if(e.tipo === "opcion") return;      // las opciones solo avanzan por botón
-  if(escribiendo) return;              // espera a que termine de escribirse
-  if(actual < ESCENAS.length - 1) ir(actual + 1);
-}
-
-// precargar imágenes para que no parpadeen al cambiar de escena
-ESCENAS.forEach(e=>{ if(e.img){ const i = new Image(); i.src = e.img; }});
+// precargar imágenes
+ESCENAS.forEach(e=>{ if(e.img){ const im = new Image(); im.src = e.img; }});
 
 pintar(0);
+
+/* ---- aviso de girar pantalla: aparece solo si está en vertical,
+        y se oculta solo a los 5 segundos pase lo que pase ---- */
+const girar = document.getElementById('girar');
+function esVertical(){
+  return window.innerHeight > window.innerWidth && window.innerWidth < 900;
+}
+if(esVertical()){
+  girar.classList.add('mostrar');
+  setTimeout(()=>girar.classList.remove('mostrar'), 5000);
+}
 </script>
 
 </body>
