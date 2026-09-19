@@ -261,8 +261,58 @@
             <div class="subtitulo-orientacion">
                 para comenzar nuestra historia
             </div>
+       
+                <!-- =====================================
+         GIFS DE INICIO
+         ===================================== -->
 
-        </div>
+    <img
+        id="gif-1"
+        class="gif-inicio"
+        src="img/1-.gif"
+        alt="Nuestra historia"
+    >
 
-    </div>
+    <img
+        id="gif-2"
+        class="gif-inicio"
+        src="img/2-.gif"
+        alt="Nuestra historia"
+    >
+        <script>
 
+        const gif1 = document.getElementById("gif-1");
+        const gif2 = document.getElementById("gif-2");
+
+        let inicioMostrado = false;
+
+        function comprobarOrientacion() {
+
+            if (window.innerWidth > window.innerHeight && !inicioMostrado) {
+
+                inicioMostrado = true;
+
+                // Mostrar primer GIF
+                gif1.style.display = "block";
+
+                // Después de 7 segundos
+                setTimeout(() => {
+
+                    // Ocultar primer GIF
+                    gif1.style.display = "none";
+
+                    // Mostrar segundo GIF
+                    gif2.style.display = "block";
+
+                }, 7000);
+
+            }
+
+        }
+
+        comprobarOrientacion();
+
+        window.addEventListener("resize", comprobarOrientacion);
+        window.addEventListener("orientationchange", comprobarOrientacion);
+
+    </script>
