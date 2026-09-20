@@ -178,7 +178,7 @@
 
 
         /* =========================
-           TEXTO DEL AVISO
+           TEXTO
            ========================= */
 
         .titulo-orientacion {
@@ -241,7 +241,12 @@
             width: 100dvw;
             height: 100dvh;
 
-            object-fit: cover;
+            /*
+             * IMPORTANTE:
+             * Mostramos el GIF completo.
+             */
+
+            object-fit: contain;
 
             object-position: center;
 
@@ -264,7 +269,6 @@
             display: none;
 
             padding: 0;
-
             margin: 0;
 
             border: none;
@@ -359,7 +363,7 @@
 
 
     <!-- =====================================
-         CONTENIDO PRINCIPAL
+         CONTENIDO
          ===================================== -->
 
     <div id="contenido"></div>
@@ -414,7 +418,7 @@
 
 
     <!-- =====================================
-         ZONA: INICIAR PARTIDA
+         ZONA INICIAR
          ===================================== -->
 
     <button
@@ -425,7 +429,7 @@
 
 
     <!-- =====================================
-         ZONA: SALIR
+         ZONA SALIR
          ===================================== -->
 
     <button
@@ -436,7 +440,7 @@
 
 
     <!-- =====================================
-         ZONA: VOLVER AL INICIO
+         ZONA VOLVER
          ===================================== -->
 
     <button
@@ -453,7 +457,7 @@
     <script>
 
         /* =========================
-           OBTENER ELEMENTOS
+           ELEMENTOS
            ========================= */
 
         const gif1 =
@@ -480,7 +484,7 @@
 
 
         /* =========================
-           ESCENA ACTUAL
+           ESTADO
            ========================= */
 
         let escenaActual = null;
@@ -489,19 +493,19 @@
 
 
         /* =========================
-           DIMENSIONES ORIGINALES
-           DE LOS GIF
+           DIMENSIONES REALES
            
-           Los GIF fueron analizados
-           como 768 x 432 px.
+           TODOS LOS GIF:
+           1920 × 1080
            ========================= */
 
-        const GIF_ANCHO = 768;
-        const GIF_ALTO = 432;
+        const GIF_ANCHO = 1920;
+
+        const GIF_ALTO = 1080;
 
 
         /* =========================
-           COMPROBAR ORIENTACIÓN
+           ORIENTACIÓN
            ========================= */
 
         function estaHorizontal() {
@@ -514,7 +518,7 @@
 
 
         /* =========================
-           OCULTAR TODAS LAS ZONAS
+           OCULTAR ZONAS
            ========================= */
 
         function ocultarZonas() {
@@ -529,7 +533,7 @@
 
 
         /* =========================
-           OCULTAR TODOS LOS GIF
+           OCULTAR GIFS
            ========================= */
 
         function ocultarGifs() {
@@ -546,7 +550,7 @@
 
 
         /* =========================
-           MOSTRAR UNA ESCENA
+           MOSTRAR ESCENA
            ========================= */
 
         function mostrarEscena(id) {
@@ -561,7 +565,9 @@
 
 
             if (!escena) {
+
                 return;
+
             }
 
 
@@ -570,12 +576,6 @@
 
             escenaActual = id;
 
-
-            /*
-             * Esperamos un momento para que
-             * el navegador tenga actualizado
-             * el tamaño real de la imagen.
-             */
 
             requestAnimationFrame(function() {
 
@@ -587,19 +587,11 @@
 
 
         /* =========================
-           CALCULAR POSICIÓN REAL
+           CALCULAR ÁREA REAL DEL GIF
            
-           IMPORTANTE:
-           
-           Como usamos object-fit: cover,
-           el GIF puede recortarse.
-           
-           Por eso no colocamos las zonas
-           simplemente usando porcentajes
-           de la pantalla.
-           
-           Calculamos dónde está realmente
-           el GIF.
+           Como usamos "contain",
+           la imagen completa siempre
+           permanece visible.
            ========================= */
 
         function calcularImagenMostrada() {
@@ -612,11 +604,11 @@
 
 
             /*
-             * Escala necesaria para "cover".
+             * Escala necesaria para contain.
              */
 
             const escala =
-                Math.max(
+                Math.min(
                     pantallaAncho / GIF_ANCHO,
                     pantallaAlto / GIF_ALTO
                 );
@@ -631,9 +623,7 @@
 
 
             /*
-             * Como object-position es center,
-             * calculamos cuánto queda fuera
-             * de la pantalla por cada lado.
+             * La imagen queda centrada.
              */
 
             const izquierda =
@@ -658,7 +648,7 @@
 
 
         /* =========================
-           COLOCAR ZONAS TÁCTILES
+           COLOCAR ZONA
            ========================= */
 
         function colocarZona(
@@ -683,12 +673,6 @@
             const arriba =
                 datosImagen.arriba;
 
-
-            /*
-             * Convertimos las coordenadas
-             * originales del GIF a coordenadas
-             * reales de la pantalla.
-             */
 
             const pantallaX =
                 izquierda + (x * escala);
@@ -764,10 +748,8 @@
                 /*
                  * INICIAR PARTIDA
                  *
-                 * X: 284
-                 * Y: 260
-                 * Ancho: 220
-                 * Alto: 22
+                 * Coordenadas obtenidas
+                 * del análisis original.
                  */
 
                 colocarZona(
@@ -787,11 +769,6 @@
 
                 /*
                  * SALIR
-                 *
-                 * X: 284
-                 * Y: 290
-                 * Ancho: 90
-                 * Alto: 22
                  */
 
                 colocarZona(
@@ -820,11 +797,6 @@
 
                 /*
                  * VOLVER AL INICIO
-                 *
-                 * X: 206
-                 * Y: 260
-                 * Ancho: 228
-                 * Alto: 22
                  */
 
                 colocarZona(
@@ -870,14 +842,14 @@
 
 
             /*
-             * PRIMER GIF
+             * GIF 1
              */
 
             mostrarEscena("gif-1");
 
 
             /*
-             * ESPERAR 5 SEGUNDOS
+             * 5 SEGUNDOS
              */
 
             setTimeout(function() {
@@ -890,7 +862,7 @@
 
 
         /* =========================
-           BOTÓN INICIAR PARTIDA
+           INICIAR PARTIDA
            ========================= */
 
         zonaIniciar.addEventListener(
@@ -904,7 +876,7 @@
 
 
         /* =========================
-           BOTÓN SALIR
+           SALIR
            ========================= */
 
         zonaSalir.addEventListener(
@@ -918,7 +890,7 @@
 
 
         /* =========================
-           BOTÓN VOLVER AL INICIO
+           VOLVER AL INICIO
            ========================= */
 
         zonaVolver.addEventListener(
@@ -932,7 +904,7 @@
 
 
         /* =========================
-           INICIAR AL CARGAR
+           CARGAR
            ========================= */
 
         iniciarHistoria();
@@ -980,7 +952,6 @@
 
             }
         );
-
 
     </script>
 
