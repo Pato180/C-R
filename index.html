@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -24,13 +23,21 @@
             box-sizing: border-box;
         }
 
+
         html,
         body {
+
             width: 100%;
             height: 100%;
+
             overflow: hidden;
+
             background: #0a0512;
-            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+
+            font-family:
+                "Trebuchet MS",
+                "Segoe UI",
+                sans-serif;
         }
 
 
@@ -41,11 +48,13 @@
         #aviso-orientacion {
 
             position: fixed;
+
             inset: 0;
 
             display: none;
 
             flex-direction: column;
+
             align-items: center;
             justify-content: center;
 
@@ -78,10 +87,15 @@
             height: 120px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
-            animation: girar-telefono 2.5s ease-in-out infinite;
+            animation:
+                girar-telefono
+                2.5s
+                ease-in-out
+                infinite;
         }
 
 
@@ -91,6 +105,7 @@
             height: 100px;
 
             border: 3px solid #a06fd6;
+
             border-radius: 12px;
 
             position: relative;
@@ -163,12 +178,13 @@
 
 
         /* =========================
-           TEXTO
+           TEXTO DEL AVISO
            ========================= */
 
         .titulo-orientacion {
 
-            font-size: clamp(22px, 6vw, 32px);
+            font-size:
+                clamp(22px, 6vw, 32px);
 
             font-weight: bold;
 
@@ -182,16 +198,18 @@
 
             margin-top: 8px;
 
-            font-size: clamp(14px, 4vw, 18px);
+            font-size:
+                clamp(14px, 4vw, 18px);
 
             line-height: 1.5;
 
-            color: rgba(244, 234, 250, 0.65);
+            color:
+                rgba(244, 234, 250, 0.65);
         }
 
 
         /* =========================
-           CONTENIDO PRINCIPAL
+           CONTENIDO
            ========================= */
 
         #contenido {
@@ -207,7 +225,7 @@
 
 
         /* =========================
-           GIFS DE INICIO
+           GIFS
            ========================= */
 
         .gif-inicio {
@@ -223,11 +241,9 @@
             width: 100dvw;
             height: 100dvh;
 
-            /*
-             * COVER hace que el GIF ocupe
-             * toda la pantalla.
-             */
             object-fit: cover;
+
+            object-position: center;
 
             background: #0a0512;
 
@@ -238,16 +254,50 @@
 
 
         /* =========================
+           ZONAS TÁCTILES
+           ========================= */
+
+        .zona-tactil {
+
+            position: fixed;
+
+            display: none;
+
+            padding: 0;
+
+            margin: 0;
+
+            border: none;
+
+            background: transparent;
+
+            z-index: 6000;
+
+            cursor: pointer;
+
+            touch-action: manipulation;
+        }
+
+
+        .zona-tactil.visible {
+
+            display: block;
+        }
+
+
+        /* =========================
            CELULAR VERTICAL
            ========================= */
 
         @media (orientation: portrait) and (max-width: 900px) {
 
             #aviso-orientacion {
+
                 display: flex;
             }
 
             #contenido {
+
                 display: none;
             }
 
@@ -261,10 +311,12 @@
         @media (orientation: landscape) {
 
             #aviso-orientacion {
+
                 display: none;
             }
 
             #contenido {
+
                 display: flex;
             }
 
@@ -333,8 +385,65 @@
         id="gif-2"
         class="gif-inicio"
         src="./img/2-.gif"
-        alt="Nuestra historia"
+        alt="Menú principal"
     >
+
+
+    <!-- =====================================
+         GIF 3
+         ===================================== -->
+
+    <img
+        id="gif-3"
+        class="gif-inicio"
+        src="./img/3-.gif"
+        alt="Salir"
+    >
+
+
+    <!-- =====================================
+         GIF 4
+         ===================================== -->
+
+    <img
+        id="gif-4"
+        class="gif-inicio"
+        src="./img/4-.gif"
+        alt="Iniciar partida"
+    >
+
+
+    <!-- =====================================
+         ZONA: INICIAR PARTIDA
+         ===================================== -->
+
+    <button
+        id="zona-iniciar"
+        class="zona-tactil"
+        aria-label="Iniciar partida">
+    </button>
+
+
+    <!-- =====================================
+         ZONA: SALIR
+         ===================================== -->
+
+    <button
+        id="zona-salir"
+        class="zona-tactil"
+        aria-label="Salir">
+    </button>
+
+
+    <!-- =====================================
+         ZONA: VOLVER AL INICIO
+         ===================================== -->
+
+    <button
+        id="zona-volver"
+        class="zona-tactil"
+        aria-label="Volver al inicio">
+    </button>
 
 
     <!-- =====================================
@@ -343,15 +452,57 @@
 
     <script>
 
-        const gif1 = document.getElementById("gif-1");
-        const gif2 = document.getElementById("gif-2");
+        /* =========================
+           OBTENER ELEMENTOS
+           ========================= */
 
-        let inicioMostrado = false;
+        const gif1 =
+            document.getElementById("gif-1");
+
+        const gif2 =
+            document.getElementById("gif-2");
+
+        const gif3 =
+            document.getElementById("gif-3");
+
+        const gif4 =
+            document.getElementById("gif-4");
 
 
-        /* =====================================
-           COMPROBAR SI ESTÁ HORIZONTAL
-           ===================================== */
+        const zonaIniciar =
+            document.getElementById("zona-iniciar");
+
+        const zonaSalir =
+            document.getElementById("zona-salir");
+
+        const zonaVolver =
+            document.getElementById("zona-volver");
+
+
+        /* =========================
+           ESCENA ACTUAL
+           ========================= */
+
+        let escenaActual = null;
+
+        let historiaIniciada = false;
+
+
+        /* =========================
+           DIMENSIONES ORIGINALES
+           DE LOS GIF
+           
+           Los GIF fueron analizados
+           como 768 x 432 px.
+           ========================= */
+
+        const GIF_ANCHO = 768;
+        const GIF_ALTO = 432;
+
+
+        /* =========================
+           COMPROBAR ORIENTACIÓN
+           ========================= */
 
         function estaHorizontal() {
 
@@ -362,62 +513,447 @@
         }
 
 
-        /* =====================================
+        /* =========================
+           OCULTAR TODAS LAS ZONAS
+           ========================= */
+
+        function ocultarZonas() {
+
+            zonaIniciar.classList.remove("visible");
+
+            zonaSalir.classList.remove("visible");
+
+            zonaVolver.classList.remove("visible");
+
+        }
+
+
+        /* =========================
+           OCULTAR TODOS LOS GIF
+           ========================= */
+
+        function ocultarGifs() {
+
+            gif1.style.display = "none";
+
+            gif2.style.display = "none";
+
+            gif3.style.display = "none";
+
+            gif4.style.display = "none";
+
+        }
+
+
+        /* =========================
+           MOSTRAR UNA ESCENA
+           ========================= */
+
+        function mostrarEscena(id) {
+
+            ocultarGifs();
+
+            ocultarZonas();
+
+
+            const escena =
+                document.getElementById(id);
+
+
+            if (!escena) {
+                return;
+            }
+
+
+            escena.style.display = "block";
+
+
+            escenaActual = id;
+
+
+            /*
+             * Esperamos un momento para que
+             * el navegador tenga actualizado
+             * el tamaño real de la imagen.
+             */
+
+            requestAnimationFrame(function() {
+
+                actualizarZonas();
+
+            });
+
+        }
+
+
+        /* =========================
+           CALCULAR POSICIÓN REAL
+           
+           IMPORTANTE:
+           
+           Como usamos object-fit: cover,
+           el GIF puede recortarse.
+           
+           Por eso no colocamos las zonas
+           simplemente usando porcentajes
+           de la pantalla.
+           
+           Calculamos dónde está realmente
+           el GIF.
+           ========================= */
+
+        function calcularImagenMostrada() {
+
+            const pantallaAncho =
+                window.innerWidth;
+
+            const pantallaAlto =
+                window.innerHeight;
+
+
+            /*
+             * Escala necesaria para "cover".
+             */
+
+            const escala =
+                Math.max(
+                    pantallaAncho / GIF_ANCHO,
+                    pantallaAlto / GIF_ALTO
+                );
+
+
+            const anchoMostrado =
+                GIF_ANCHO * escala;
+
+
+            const altoMostrado =
+                GIF_ALTO * escala;
+
+
+            /*
+             * Como object-position es center,
+             * calculamos cuánto queda fuera
+             * de la pantalla por cada lado.
+             */
+
+            const izquierda =
+                (pantallaAncho - anchoMostrado) / 2;
+
+
+            const arriba =
+                (pantallaAlto - altoMostrado) / 2;
+
+
+            return {
+
+                escala: escala,
+
+                izquierda: izquierda,
+
+                arriba: arriba
+
+            };
+
+        }
+
+
+        /* =========================
+           COLOCAR ZONAS TÁCTILES
+           ========================= */
+
+        function colocarZona(
+
+            zona,
+            x,
+            y,
+            ancho,
+            alto,
+            datosImagen
+
+        ) {
+
+            const escala =
+                datosImagen.escala;
+
+
+            const izquierda =
+                datosImagen.izquierda;
+
+
+            const arriba =
+                datosImagen.arriba;
+
+
+            /*
+             * Convertimos las coordenadas
+             * originales del GIF a coordenadas
+             * reales de la pantalla.
+             */
+
+            const pantallaX =
+                izquierda + (x * escala);
+
+
+            const pantallaY =
+                arriba + (y * escala);
+
+
+            const pantallaAncho =
+                ancho * escala;
+
+
+            const pantallaAlto =
+                alto * escala;
+
+
+            zona.style.left =
+                pantallaX + "px";
+
+
+            zona.style.top =
+                pantallaY + "px";
+
+
+            zona.style.width =
+                pantallaAncho + "px";
+
+
+            zona.style.height =
+                pantallaAlto + "px";
+
+
+            zona.classList.add("visible");
+
+        }
+
+
+        /* =========================
+           ACTUALIZAR ZONAS
+           ========================= */
+
+        function actualizarZonas() {
+
+            ocultarZonas();
+
+
+            if (!estaHorizontal()) {
+
+                return;
+
+            }
+
+
+            if (!escenaActual) {
+
+                return;
+
+            }
+
+
+            const datosImagen =
+                calcularImagenMostrada();
+
+
+            /* =========================
+               GIF 2
+               ========================= */
+
+            if (escenaActual === "gif-2") {
+
+
+                /*
+                 * INICIAR PARTIDA
+                 *
+                 * X: 284
+                 * Y: 260
+                 * Ancho: 220
+                 * Alto: 22
+                 */
+
+                colocarZona(
+
+                    zonaIniciar,
+
+                    284,
+                    260,
+
+                    220,
+                    22,
+
+                    datosImagen
+
+                );
+
+
+                /*
+                 * SALIR
+                 *
+                 * X: 284
+                 * Y: 290
+                 * Ancho: 90
+                 * Alto: 22
+                 */
+
+                colocarZona(
+
+                    zonaSalir,
+
+                    284,
+                    290,
+
+                    90,
+                    22,
+
+                    datosImagen
+
+                );
+
+            }
+
+
+            /* =========================
+               GIF 3
+               ========================= */
+
+            if (escenaActual === "gif-3") {
+
+
+                /*
+                 * VOLVER AL INICIO
+                 *
+                 * X: 206
+                 * Y: 260
+                 * Ancho: 228
+                 * Alto: 22
+                 */
+
+                colocarZona(
+
+                    zonaVolver,
+
+                    206,
+                    260,
+
+                    228,
+                    22,
+
+                    datosImagen
+
+                );
+
+            }
+
+        }
+
+
+        /* =========================
            INICIAR HISTORIA
-           ===================================== */
+           ========================= */
 
         function iniciarHistoria() {
 
             if (!estaHorizontal()) {
+
                 return;
+
             }
 
-            if (inicioMostrado) {
+
+            if (historiaIniciada) {
+
                 return;
+
             }
 
-            inicioMostrado = true;
+
+            historiaIniciada = true;
 
 
-            /* =========================
-               MOSTRAR GIF 1
-               ========================= */
+            /*
+             * PRIMER GIF
+             */
 
-            gif1.style.display = "block";
+            mostrarEscena("gif-1");
 
 
-            /* =========================
-               DESPUÉS DE 5 SEGUNDOS
-               ========================= */
+            /*
+             * ESPERAR 5 SEGUNDOS
+             */
 
             setTimeout(function() {
 
-                gif1.style.display = "none";
-
-                gif2.style.display = "block";
+                mostrarEscena("gif-2");
 
             }, 5000);
 
         }
 
 
-        /* =====================================
-           COMPROBAR AL CARGAR
-           ===================================== */
+        /* =========================
+           BOTÓN INICIAR PARTIDA
+           ========================= */
+
+        zonaIniciar.addEventListener(
+            "click",
+            function() {
+
+                mostrarEscena("gif-4");
+
+            }
+        );
+
+
+        /* =========================
+           BOTÓN SALIR
+           ========================= */
+
+        zonaSalir.addEventListener(
+            "click",
+            function() {
+
+                mostrarEscena("gif-3");
+
+            }
+        );
+
+
+        /* =========================
+           BOTÓN VOLVER AL INICIO
+           ========================= */
+
+        zonaVolver.addEventListener(
+            "click",
+            function() {
+
+                mostrarEscena("gif-2");
+
+            }
+        );
+
+
+        /* =========================
+           INICIAR AL CARGAR
+           ========================= */
 
         iniciarHistoria();
 
 
-        /* =====================================
-           COMPROBAR CUANDO CAMBIA ORIENTACIÓN
-           ===================================== */
+        /* =========================
+           CAMBIO DE ORIENTACIÓN
+           ========================= */
 
         window.addEventListener(
             "orientationchange",
             function() {
 
                 setTimeout(
-                    iniciarHistoria,
+                    function() {
+
+                        iniciarHistoria();
+
+                        actualizarZonas();
+
+                    },
                     300
                 );
 
@@ -425,17 +961,21 @@
         );
 
 
-        /* =====================================
-           COMPROBAR CUANDO CAMBIA EL TAMAÑO
-           ===================================== */
+        /* =========================
+           CAMBIO DE TAMAÑO
+           ========================= */
 
         window.addEventListener(
             "resize",
             function() {
 
                 setTimeout(
-                    iniciarHistoria,
-                    300
+                    function() {
+
+                        actualizarZonas();
+
+                    },
+                    100
                 );
 
             }
@@ -444,8 +984,6 @@
 
     </script>
 
-
 </body>
 
 </html>
-```
