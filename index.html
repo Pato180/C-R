@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -222,7 +223,11 @@
             width: 100dvw;
             height: 100dvh;
 
-            object-fit: contain;
+            /*
+             * COVER hace que el GIF ocupe
+             * toda la pantalla.
+             */
+            object-fit: cover;
 
             background: #0a0512;
 
@@ -391,7 +396,7 @@
 
                 gif2.style.display = "block";
 
-            }, 7000);
+            }, 5000);
 
         }
 
@@ -443,3 +448,4 @@
 </body>
 
 </html>
+```
