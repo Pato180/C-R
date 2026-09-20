@@ -206,7 +206,7 @@
 
 
         /* =========================
-           GIFS DE INICIO
+           GIFS
            ========================= */
 
         .gif-inicio {
@@ -229,6 +229,79 @@
             display: none;
 
             z-index: 5000;
+        }
+
+
+        /* =========================
+           ZONAS INTERACTIVAS
+           ========================= */
+
+        .zona-interactiva {
+
+            position: fixed;
+
+            display: none;
+
+            z-index: 6000;
+
+            cursor: pointer;
+
+            /*
+            IMPORTANTE:
+
+            Estas zonas son transparentes.
+            No modifican la apariencia del GIF.
+            */
+
+            background: transparent;
+
+            border: none;
+
+            padding: 0;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* =========================
+           BOTÓN INICIAR PARTIDA
+           ========================= */
+
+        #zona-iniciar {
+
+            width: 35vw;
+            height: 12vh;
+
+            left: 32.5vw;
+            top: 58vh;
+        }
+
+
+        /* =========================
+           BOTÓN SALIR
+           ========================= */
+
+        #zona-salir {
+
+            width: 25vw;
+            height: 10vh;
+
+            left: 37.5vw;
+            top: 72vh;
+        }
+
+
+        /* =========================
+           BOTÓN VOLVER AL INICIO
+           ========================= */
+
+        #zona-volver {
+
+            width: 40vw;
+            height: 12vh;
+
+            left: 30vw;
+            top: 75vh;
         }
 
 
@@ -333,13 +406,73 @@
 
 
     <!-- =====================================
+         GIF 3
+         ===================================== -->
+
+    <img
+        id="gif-3"
+        class="gif-inicio"
+        src="./img/3-.gif"
+        alt="Volver al inicio"
+    >
+
+
+    <!-- =====================================
+         GIF 4
+         ===================================== -->
+
+    <img
+        id="gif-4"
+        class="gif-inicio"
+        src="./img/4-.gif"
+        alt="Iniciar partida"
+    >
+
+
+    <!-- =====================================
+         ZONAS INTERACTIVAS
+         ===================================== -->
+
+    <button
+        id="zona-iniciar"
+        class="zona-interactiva"
+        aria-label="Iniciar partida">
+    </button>
+
+
+    <button
+        id="zona-salir"
+        class="zona-interactiva"
+        aria-label="Salir">
+    </button>
+
+
+    <button
+        id="zona-volver"
+        class="zona-interactiva"
+        aria-label="Volver al inicio">
+    </button>
+
+
+    <!-- =====================================
          JAVASCRIPT
          ===================================== -->
 
     <script>
 
+        /* =========================
+           OBTENER ELEMENTOS
+           ========================= */
+
         const gif1 = document.getElementById("gif-1");
         const gif2 = document.getElementById("gif-2");
+        const gif3 = document.getElementById("gif-3");
+        const gif4 = document.getElementById("gif-4");
+
+        const zonaIniciar = document.getElementById("zona-iniciar");
+        const zonaSalir = document.getElementById("zona-salir");
+        const zonaVolver = document.getElementById("zona-volver");
+
 
         let inicioMostrado = false;
 
@@ -353,6 +486,68 @@
             return window.matchMedia(
                 "(orientation: landscape)"
             ).matches;
+
+        }
+
+
+        /* =====================================
+           OCULTAR TODAS LAS ESCENAS
+           ===================================== */
+
+        function ocultarTodo() {
+
+            gif1.style.display = "none";
+            gif2.style.display = "none";
+            gif3.style.display = "none";
+            gif4.style.display = "none";
+
+            zonaIniciar.style.display = "none";
+            zonaSalir.style.display = "none";
+            zonaVolver.style.display = "none";
+
+        }
+
+
+        /* =====================================
+           MOSTRAR GIF 2
+           ===================================== */
+
+        function mostrarGif2() {
+
+            ocultarTodo();
+
+            gif2.style.display = "block";
+
+            zonaIniciar.style.display = "block";
+            zonaSalir.style.display = "block";
+
+        }
+
+
+        /* =====================================
+           MOSTRAR GIF 3
+           ===================================== */
+
+        function mostrarGif3() {
+
+            ocultarTodo();
+
+            gif3.style.display = "block";
+
+            zonaVolver.style.display = "block";
+
+        }
+
+
+        /* =====================================
+           MOSTRAR GIF 4
+           ===================================== */
+
+        function mostrarGif4() {
+
+            ocultarTodo();
+
+            gif4.style.display = "block";
 
         }
 
@@ -378,6 +573,8 @@
                MOSTRAR GIF 1
                ========================= */
 
+            ocultarTodo();
+
             gif1.style.display = "block";
 
 
@@ -387,13 +584,53 @@
 
             setTimeout(function() {
 
-                gif1.style.display = "none";
-
-                gif2.style.display = "block";
+                mostrarGif2();
 
             }, 7000);
 
         }
+
+
+        /* =====================================
+           INICIAR PARTIDA
+           ===================================== */
+
+        zonaIniciar.addEventListener(
+            "click",
+            function() {
+
+                mostrarGif4();
+
+            }
+        );
+
+
+        /* =====================================
+           SALIR
+           ===================================== */
+
+        zonaSalir.addEventListener(
+            "click",
+            function() {
+
+                mostrarGif3();
+
+            }
+        );
+
+
+        /* =====================================
+           VOLVER AL INICIO
+           ===================================== */
+
+        zonaVolver.addEventListener(
+            "click",
+            function() {
+
+                mostrarGif2();
+
+            }
+        );
 
 
         /* =====================================
@@ -404,7 +641,7 @@
 
 
         /* =====================================
-           COMPROBAR CUANDO CAMBIA ORIENTACIÓN
+           CAMBIO DE ORIENTACIÓN
            ===================================== */
 
         window.addEventListener(
@@ -421,7 +658,7 @@
 
 
         /* =====================================
-           COMPROBAR CUANDO CAMBIA EL TAMAÑO
+           CAMBIO DE TAMAÑO
            ===================================== */
 
         window.addEventListener(
