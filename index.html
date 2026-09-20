@@ -214,8 +214,9 @@
 
         #contenido {
 
-            width: 100%;
-            height: 100%;
+            position: fixed;
+
+            inset: 0;
 
             display: flex;
 
@@ -225,15 +226,15 @@
 
 
         /* =========================
-           GIFS
+           MARCO DE LA HISTORIA
+           
+           Este marco mantiene siempre
+           la proporción 1920 × 1080.
            ========================= */
 
-        .gif-inicio {
+        #marco-historia {
 
-            position: fixed;
-
-            top: 0;
-            left: 0;
+            position: relative;
 
             width: 100vw;
             height: 100vh;
@@ -241,10 +242,27 @@
             width: 100dvw;
             height: 100dvh;
 
-            /*
-             * IMPORTANTE:
-             * Mostramos el GIF completo.
-             */
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================
+           GIFS
+           ========================= */
+
+        .gif-inicio {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
 
             object-fit: contain;
 
@@ -254,7 +272,23 @@
 
             display: none;
 
-            z-index: 5000;
+            z-index: 1;
+        }
+
+
+        /* =========================
+           CAPA DE BOTONES
+           ========================= */
+
+        #capa-botones {
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 10;
+
+            pointer-events: none;
         }
 
 
@@ -264,7 +298,7 @@
 
         .zona-tactil {
 
-            position: fixed;
+            position: absolute;
 
             display: none;
 
@@ -275,9 +309,9 @@
 
             background: transparent;
 
-            z-index: 6000;
-
             cursor: pointer;
+
+            pointer-events: auto;
 
             touch-action: manipulation;
         }
@@ -363,91 +397,109 @@
 
 
     <!-- =====================================
-         CONTENIDO
+         HISTORIA
          ===================================== -->
 
-    <div id="contenido"></div>
+    <div id="contenido">
+
+        <div id="marco-historia">
 
 
-    <!-- =====================================
-         GIF 1
-         ===================================== -->
+            <!-- =========================
+                 GIF 1
+                 ========================= -->
 
-    <img
-        id="gif-1"
-        class="gif-inicio"
-        src="./img/1-.gif"
-        alt="Nuestra historia"
-    >
-
-
-    <!-- =====================================
-         GIF 2
-         ===================================== -->
-
-    <img
-        id="gif-2"
-        class="gif-inicio"
-        src="./img/2-.gif"
-        alt="Menú principal"
-    >
+            <img
+                id="gif-1"
+                class="gif-inicio"
+                src="./img/1-.gif"
+                alt="Nuestra historia"
+            >
 
 
-    <!-- =====================================
-         GIF 3
-         ===================================== -->
+            <!-- =========================
+                 GIF 2
+                 ========================= -->
 
-    <img
-        id="gif-3"
-        class="gif-inicio"
-        src="./img/3-.gif"
-        alt="Salir"
-    >
-
-
-    <!-- =====================================
-         GIF 4
-         ===================================== -->
-
-    <img
-        id="gif-4"
-        class="gif-inicio"
-        src="./img/4-.gif"
-        alt="Iniciar partida"
-    >
+            <img
+                id="gif-2"
+                class="gif-inicio"
+                src="./img/2-.gif"
+                alt="Menú principal"
+            >
 
 
-    <!-- =====================================
-         ZONA INICIAR
-         ===================================== -->
+            <!-- =========================
+                 GIF 3
+                 ========================= -->
 
-    <button
-        id="zona-iniciar"
-        class="zona-tactil"
-        aria-label="Iniciar partida">
-    </button>
-
-
-    <!-- =====================================
-         ZONA SALIR
-         ===================================== -->
-
-    <button
-        id="zona-salir"
-        class="zona-tactil"
-        aria-label="Salir">
-    </button>
+            <img
+                id="gif-3"
+                class="gif-inicio"
+                src="./img/3-.gif"
+                alt="Salir"
+            >
 
 
-    <!-- =====================================
-         ZONA VOLVER
-         ===================================== -->
+            <!-- =========================
+                 GIF 4
+                 ========================= -->
 
-    <button
-        id="zona-volver"
-        class="zona-tactil"
-        aria-label="Volver al inicio">
-    </button>
+            <img
+                id="gif-4"
+                class="gif-inicio"
+                src="./img/4-.gif"
+                alt="Iniciar partida"
+            >
+
+
+            <!-- =========================
+                 CAPA DE BOTONES
+                 ========================= -->
+
+            <div id="capa-botones">
+
+
+                <!-- INICIAR PARTIDA -->
+
+                <button
+                    id="zona-iniciar"
+                    class="zona-tactil"
+                    aria-label="Iniciar partida">
+                </button>
+
+
+                <!-- SALIR -->
+
+                <button
+                    id="zona-salir"
+                    class="zona-tactil"
+                    aria-label="Salir">
+                </button>
+
+
+                <!-- VOLVER AL INICIO -->
+
+                <button
+                    id="zona-volver"
+                    class="zona-tactil"
+                    aria-label="Volver al inicio">
+                </button>
+
+
+                <!-- PLAY DE GIF 4 -->
+
+                <button
+                    id="zona-play"
+                    class="zona-tactil"
+                    aria-label="Play">
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- =====================================
@@ -456,8 +508,9 @@
 
     <script>
 
+
         /* =========================
-           ELEMENTOS
+           GIFS
            ========================= */
 
         const gif1 =
@@ -473,6 +526,10 @@
             document.getElementById("gif-4");
 
 
+        /* =========================
+           BOTONES
+           ========================= */
+
         const zonaIniciar =
             document.getElementById("zona-iniciar");
 
@@ -481,6 +538,9 @@
 
         const zonaVolver =
             document.getElementById("zona-volver");
+
+        const zonaPlay =
+            document.getElementById("zona-play");
 
 
         /* =========================
@@ -493,19 +553,19 @@
 
 
         /* =========================
-           DIMENSIONES REALES
+           RESOLUCIÓN ORIGINAL
            
-           TODOS LOS GIF:
+           Todos los GIF:
            1920 × 1080
            ========================= */
 
-        const GIF_ANCHO = 1920;
+        const ANCHO_GIF = 1920;
 
-        const GIF_ALTO = 1080;
+        const ALTO_GIF = 1080;
 
 
         /* =========================
-           ORIENTACIÓN
+           COMPROBAR ORIENTACIÓN
            ========================= */
 
         function estaHorizontal() {
@@ -513,21 +573,6 @@
             return window.matchMedia(
                 "(orientation: landscape)"
             ).matches;
-
-        }
-
-
-        /* =========================
-           OCULTAR ZONAS
-           ========================= */
-
-        function ocultarZonas() {
-
-            zonaIniciar.classList.remove("visible");
-
-            zonaSalir.classList.remove("visible");
-
-            zonaVolver.classList.remove("visible");
 
         }
 
@@ -545,6 +590,23 @@
             gif3.style.display = "none";
 
             gif4.style.display = "none";
+
+        }
+
+
+        /* =========================
+           OCULTAR BOTONES
+           ========================= */
+
+        function ocultarZonas() {
+
+            zonaIniciar.classList.remove("visible");
+
+            zonaSalir.classList.remove("visible");
+
+            zonaVolver.classList.remove("visible");
+
+            zonaPlay.classList.remove("visible");
 
         }
 
@@ -587,14 +649,15 @@
 
 
         /* =========================
-           CALCULAR ÁREA REAL DEL GIF
+           CALCULAR ESCALA
            
-           Como usamos "contain",
-           la imagen completa siempre
-           permanece visible.
+           Aquí hacemos que las
+           coordenadas de 1920 × 1080
+           se adapten exactamente a
+           la imagen visible.
            ========================= */
 
-        function calcularImagenMostrada() {
+        function calcularAreaImagen() {
 
             const pantallaAncho =
                 window.innerWidth;
@@ -604,34 +667,39 @@
 
 
             /*
-             * Escala necesaria para contain.
+             * "contain":
+             * la imagen completa siempre
+             * permanece visible.
              */
 
             const escala =
                 Math.min(
-                    pantallaAncho / GIF_ANCHO,
-                    pantallaAlto / GIF_ALTO
+
+                    pantallaAncho / ANCHO_GIF,
+
+                    pantallaAlto / ALTO_GIF
+
                 );
 
 
-            const anchoMostrado =
-                GIF_ANCHO * escala;
+            const ancho =
+                ANCHO_GIF * escala;
 
 
-            const altoMostrado =
-                GIF_ALTO * escala;
+            const alto =
+                ALTO_GIF * escala;
 
 
             /*
-             * La imagen queda centrada.
+             * Centrar imagen.
              */
 
             const izquierda =
-                (pantallaAncho - anchoMostrado) / 2;
+                (pantallaAncho - ancho) / 2;
 
 
             const arriba =
-                (pantallaAlto - altoMostrado) / 2;
+                (pantallaAlto - alto) / 2;
 
 
             return {
@@ -648,62 +716,53 @@
 
 
         /* =========================
-           COLOCAR ZONA
+           COLOCAR BOTÓN
            ========================= */
 
         function colocarZona(
 
             zona,
+
             x,
             y,
+
             ancho,
+
             alto,
-            datosImagen
+
+            area
 
         ) {
 
             const escala =
-                datosImagen.escala;
+                area.escala;
 
 
-            const izquierda =
-                datosImagen.izquierda;
-
-
-            const arriba =
-                datosImagen.arriba;
-
-
-            const pantallaX =
-                izquierda + (x * escala);
-
-
-            const pantallaY =
-                arriba + (y * escala);
-
-
-            const pantallaAncho =
-                ancho * escala;
-
-
-            const pantallaAlto =
-                alto * escala;
-
+            /*
+             * Coordenadas de 1920 × 1080
+             * convertidas a pantalla.
+             */
 
             zona.style.left =
-                pantallaX + "px";
+                (
+                    area.izquierda +
+                    (x * escala)
+                ) + "px";
 
 
             zona.style.top =
-                pantallaY + "px";
+                (
+                    area.arriba +
+                    (y * escala)
+                ) + "px";
 
 
             zona.style.width =
-                pantallaAncho + "px";
+                (ancho * escala) + "px";
 
 
             zona.style.height =
-                pantallaAlto + "px";
+                (alto * escala) + "px";
 
 
             zona.classList.add("visible");
@@ -712,7 +771,7 @@
 
 
         /* =========================
-           ACTUALIZAR ZONAS
+           ACTUALIZAR BOTONES
            ========================= */
 
         function actualizarZonas() {
@@ -734,8 +793,8 @@
             }
 
 
-            const datosImagen =
-                calcularImagenMostrada();
+            const area =
+                calcularAreaImagen();
 
 
             /* =========================
@@ -748,40 +807,47 @@
                 /*
                  * INICIAR PARTIDA
                  *
-                 * Coordenadas obtenidas
-                 * del análisis original.
+                 * X: 710
+                 * Y: 650
+                 * W: 550
+                 * H: 55
                  */
 
                 colocarZona(
 
                     zonaIniciar,
 
-                    284,
-                    260,
+                    710,
+                    650,
 
-                    220,
-                    22,
+                    550,
+                    55,
 
-                    datosImagen
+                    area
 
                 );
 
 
                 /*
                  * SALIR
+                 *
+                 * X: 710
+                 * Y: 725
+                 * W: 225
+                 * H: 55
                  */
 
                 colocarZona(
 
                     zonaSalir,
 
-                    284,
-                    290,
+                    710,
+                    725,
 
-                    90,
-                    22,
+                    225,
+                    55,
 
-                    datosImagen
+                    area
 
                 );
 
@@ -797,19 +863,57 @@
 
                 /*
                  * VOLVER AL INICIO
+                 *
+                 * X: 515
+                 * Y: 650
+                 * W: 570
+                 * H: 55
                  */
 
                 colocarZona(
 
                     zonaVolver,
 
-                    206,
-                    260,
+                    515,
+                    650,
 
-                    228,
-                    22,
+                    570,
+                    55,
 
-                    datosImagen
+                    area
+
+                );
+
+            }
+
+
+            /* =========================
+               GIF 4
+               ========================= */
+
+            if (escenaActual === "gif-4") {
+
+
+                /*
+                 * PLAY
+                 *
+                 * X: 687
+                 * Y: 865
+                 * W: 317
+                 * H: 110
+                 */
+
+                colocarZona(
+
+                    zonaPlay,
+
+                    687,
+                    865,
+
+                    317,
+                    110,
+
+                    area
 
                 );
 
@@ -849,7 +953,7 @@
 
 
             /*
-             * 5 SEGUNDOS
+             * ESPERAR 5 SEGUNDOS
              */
 
             setTimeout(function() {
@@ -866,12 +970,15 @@
            ========================= */
 
         zonaIniciar.addEventListener(
+
             "click",
+
             function() {
 
                 mostrarEscena("gif-4");
 
             }
+
         );
 
 
@@ -880,12 +987,15 @@
            ========================= */
 
         zonaSalir.addEventListener(
+
             "click",
+
             function() {
 
                 mostrarEscena("gif-3");
 
             }
+
         );
 
 
@@ -894,17 +1004,43 @@
            ========================= */
 
         zonaVolver.addEventListener(
+
             "click",
+
             function() {
 
                 mostrarEscena("gif-2");
 
             }
+
         );
 
 
         /* =========================
-           CARGAR
+           PLAY
+           
+           Todavía no hacemos nada
+           porque falta definir qué
+           debe suceder después.
+           ========================= */
+
+        zonaPlay.addEventListener(
+
+            "click",
+
+            function() {
+
+                console.log(
+                    "PLAY seleccionado"
+                );
+
+            }
+
+        );
+
+
+        /* =========================
+           CARGAR HISTORIA
            ========================= */
 
         iniciarHistoria();
@@ -915,10 +1051,13 @@
            ========================= */
 
         window.addEventListener(
+
             "orientationchange",
+
             function() {
 
                 setTimeout(
+
                     function() {
 
                         iniciarHistoria();
@@ -926,10 +1065,13 @@
                         actualizarZonas();
 
                     },
+
                     300
+
                 );
 
             }
+
         );
 
 
@@ -938,19 +1080,25 @@
            ========================= */
 
         window.addEventListener(
+
             "resize",
+
             function() {
 
                 setTimeout(
+
                     function() {
 
                         actualizarZonas();
 
                     },
+
                     100
+
                 );
 
             }
+
         );
 
     </script>
