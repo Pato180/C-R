@@ -2,11 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
     <title>Nuestra historia</title>
 
     <style>
+
+        /* ==================================================
+           CONFIGURACIÓN GENERAL
+           ================================================== */
+
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -18,7 +27,9 @@
             height: 100%;
             margin: 0;
             padding: 0;
+
             overflow: hidden;
+
             background: #0a0512;
         }
 
@@ -26,27 +37,36 @@
             font-family: Arial, sans-serif;
         }
 
+
         /* ==================================================
-           PANTALLA PARA GIRAR EL TELÉFONO
+           PANTALLA "GIRA TU PANTALLA"
            ================================================== */
 
         #aviso-orientacion {
+
             position: fixed;
             inset: 0;
+
             z-index: 1000;
 
             display: none;
+
             flex-direction: column;
             align-items: center;
             justify-content: center;
 
             background: #0a0512;
+
             color: white;
 
             text-align: center;
         }
 
+
+        /* Teléfono animado */
+
         .telefono-contenedor {
+
             position: relative;
 
             width: 90px;
@@ -54,20 +74,29 @@
 
             margin-bottom: 35px;
 
-            animation: girarTelefono 2.5s ease-in-out infinite;
+            animation:
+                girarTelefono
+                2.5s
+                ease-in-out
+                infinite;
         }
 
+
         .telefono {
+
             width: 90px;
             height: 155px;
 
             border: 5px solid white;
+
             border-radius: 18px;
 
             position: relative;
         }
 
+
         .telefono::before {
+
             content: "";
 
             position: absolute;
@@ -85,7 +114,9 @@
             background: white;
         }
 
+
         .telefono::after {
+
             content: "";
 
             position: absolute;
@@ -103,21 +134,29 @@
             background: white;
         }
 
+
         #aviso-orientacion h1 {
+
             margin: 0 0 12px;
 
             font-size: clamp(25px, 6vw, 42px);
+
             font-weight: bold;
         }
 
+
         #aviso-orientacion p {
+
             margin: 0;
 
             font-size: clamp(16px, 4vw, 24px);
+
             opacity: 0.85;
         }
 
+
         @keyframes girarTelefono {
+
             0% {
                 transform: rotate(0deg);
             }
@@ -141,7 +180,9 @@
            ================================================== */
 
         #contenido {
+
             position: fixed;
+
             inset: 0;
 
             display: none;
@@ -158,9 +199,11 @@
            ================================================== */
 
         #marco-historia {
+
             position: relative;
 
             width: min(100vw, 177.7777778vh);
+
             height: min(56.25vw, 100vh);
 
             aspect-ratio: 16 / 9;
@@ -172,6 +215,7 @@
             touch-action: manipulation;
 
             user-select: none;
+
             -webkit-user-select: none;
         }
 
@@ -181,6 +225,7 @@
            ================================================== */
 
         .gif-inicio {
+
             position: absolute;
 
             inset: 0;
@@ -188,34 +233,50 @@
             width: 100%;
             height: 100%;
 
+            /*
+             * Mantiene la proporción original
+             * de los GIF 1920 x 1080.
+             */
+
             object-fit: contain;
 
             display: none;
 
             background: #0a0512;
 
+            /*
+             * El GIF no recibe directamente el toque.
+             * El toque lo recibe #marco-historia.
+             */
+
             pointer-events: none;
 
             user-select: none;
+
             -webkit-user-select: none;
         }
 
+
         .gif-inicio.activo {
+
             display: block;
         }
 
 
         /* ==================================================
-           INDICADOR DE CARGA
+           PANTALLA DE CARGA
            ================================================== */
 
         #cargando {
+
             position: fixed;
+
             inset: 0;
 
             z-index: 2000;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
@@ -234,24 +295,30 @@
         @media (orientation: portrait) {
 
             #aviso-orientacion {
+
                 display: flex;
             }
 
             #contenido {
+
                 display: none;
             }
         }
+
 
         @media (orientation: landscape) {
 
             #aviso-orientacion {
+
                 display: none;
             }
 
             #contenido {
+
                 display: flex;
             }
         }
+
     </style>
 </head>
 
@@ -264,34 +331,49 @@
          ================================================== -->
 
     <div id="cargando">
+
         Cargando...
+
     </div>
 
 
     <!-- ==================================================
-         MENSAJE PARA GIRAR EL TELÉFONO
+         PANTALLA PARA GIRAR EL TELÉFONO
          ================================================== -->
 
     <div id="aviso-orientacion">
 
         <div class="telefono-contenedor">
+
             <div class="telefono"></div>
+
         </div>
 
-        <h1>Gira tu pantalla</h1>
 
-        <p>para comenzar nuestra historia</p>
+        <h1>
+            Gira tu pantalla
+        </h1>
+
+
+        <p>
+            para comenzar nuestra historia
+        </p>
 
     </div>
 
 
     <!-- ==================================================
-         CONTENIDO PRINCIPAL
+         HISTORIA
          ================================================== -->
 
     <main id="contenido">
 
         <div id="marco-historia">
+
+
+            <!-- ==================================================
+                 GIF 1
+                 ================================================== -->
 
             <img
                 id="gif-1"
@@ -300,12 +382,22 @@
                 alt="Nuestra historia"
             >
 
+
+            <!-- ==================================================
+                 GIF 2
+                 ================================================== -->
+
             <img
                 id="gif-2"
                 class="gif-inicio"
                 src="./img/2-.gif"
                 alt="Menú principal"
             >
+
+
+            <!-- ==================================================
+                 GIF 3
+                 ================================================== -->
 
             <img
                 id="gif-3"
@@ -314,12 +406,30 @@
                 alt="Salir"
             >
 
+
+            <!-- ==================================================
+                 GIF 4
+                 ================================================== -->
+
             <img
                 id="gif-4"
                 class="gif-inicio"
                 src="./img/4-.gif"
                 alt="Iniciar partida"
             >
+
+
+            <!-- ==================================================
+                 GIF 5
+                 ================================================== -->
+
+            <img
+                id="gif-5"
+                class="gif-inicio"
+                src="./img/5-.gif"
+                alt="Siguiente escena"
+            >
+
 
         </div>
 
@@ -328,18 +438,37 @@
 
     <script>
 
+
         /* ==================================================
            ELEMENTOS
            ================================================== */
 
-        const marco = document.getElementById("marco-historia");
+        const marco =
+            document.getElementById("marco-historia");
 
-        const gif1 = document.getElementById("gif-1");
-        const gif2 = document.getElementById("gif-2");
-        const gif3 = document.getElementById("gif-3");
-        const gif4 = document.getElementById("gif-4");
 
-        const cargando = document.getElementById("cargando");
+        const gif1 =
+            document.getElementById("gif-1");
+
+
+        const gif2 =
+            document.getElementById("gif-2");
+
+
+        const gif3 =
+            document.getElementById("gif-3");
+
+
+        const gif4 =
+            document.getElementById("gif-4");
+
+
+        const gif5 =
+            document.getElementById("gif-5");
+
+
+        const cargando =
+            document.getElementById("cargando");
 
 
         /* ==================================================
@@ -347,6 +476,7 @@
            ================================================== */
 
         let escenaActual = null;
+
 
         let temporizadorGif1 = null;
 
@@ -357,58 +487,119 @@
 
         function mostrarEscena(escena) {
 
+
+            /*
+             * Ocultamos TODOS los GIF.
+             */
+
             gif1.classList.remove("activo");
+
             gif2.classList.remove("activo");
+
             gif3.classList.remove("activo");
+
             gif4.classList.remove("activo");
 
+            gif5.classList.remove("activo");
+
+
+            /*
+             * Mostramos únicamente
+             * la escena correspondiente.
+             */
+
             if (escena === "gif-1") {
+
                 gif1.classList.add("activo");
             }
 
+
             if (escena === "gif-2") {
+
                 gif2.classList.add("activo");
             }
 
+
             if (escena === "gif-3") {
+
                 gif3.classList.add("activo");
             }
 
+
             if (escena === "gif-4") {
+
                 gif4.classList.add("activo");
             }
 
+
+            if (escena === "gif-5") {
+
+                gif5.classList.add("activo");
+            }
+
+
+            /*
+             * Guardamos cuál es la escena actual.
+             */
+
             escenaActual = escena;
 
-            console.log("Escena actual:", escenaActual);
+
+            console.log(
+                "Escena actual:",
+                escenaActual
+            );
+
         }
 
 
         /* ==================================================
-           CUANDO LOS GIFS TERMINEN DE CARGAR
+           CARGA DE IMÁGENES
            ================================================== */
 
-        const imagenes = [gif1, gif2, gif3, gif4];
+        const imagenes = [
+
+            gif1,
+            gif2,
+            gif3,
+            gif4,
+            gif5
+
+        ];
+
 
         let imagenesCargadas = 0;
 
+
         imagenes.forEach((imagen) => {
+
 
             if (imagen.complete) {
 
                 imagenesCargadas++;
 
-            } else {
+            }
 
-                imagen.addEventListener("load", () => {
+            else {
 
-                    imagenesCargadas++;
+                imagen.addEventListener(
+                    "load",
+                    () => {
 
-                    if (imagenesCargadas === imagenes.length) {
-                        iniciarHistoria();
+                        imagenesCargadas++;
+
+
+                        if (
+                            imagenesCargadas ===
+                            imagenes.length
+                        ) {
+
+                            iniciarHistoria();
+
+                        }
+
                     }
-
-                });
+                );
 
             }
 
@@ -421,224 +612,389 @@
 
         function iniciarHistoria() {
 
-            cargando.style.display = "none";
 
             /*
-             * Comenzamos mostrando el GIF 1.
+             * Quitamos la pantalla de carga.
+             */
+
+            cargando.style.display = "none";
+
+
+            /*
+             * Comenzamos con GIF 1.
              */
 
             mostrarEscena("gif-1");
 
 
             /*
-             * Después de EXACTAMENTE 5 segundos
-             * pasamos al GIF 2.
+             * Después de 5 segundos
+             * pasamos automáticamente
+             * al GIF 2.
              */
 
             clearTimeout(temporizadorGif1);
 
-            temporizadorGif1 = setTimeout(() => {
 
-                mostrarEscena("gif-2");
+            temporizadorGif1 =
+                setTimeout(
+                    () => {
 
-            }, 5000);
+                        mostrarEscena("gif-2");
+
+                    },
+                    5000
+                );
+
         }
 
 
         /*
-         * Si las imágenes ya estaban cargadas cuando
-         * se ejecutó el código.
+         * Si todas las imágenes
+         * ya estaban cargadas.
          */
 
-        if (imagenesCargadas === imagenes.length) {
+        if (
+            imagenesCargadas ===
+            imagenes.length
+        ) {
+
             iniciarHistoria();
+
         }
 
 
         /* ==================================================
-           DETECTAR TOQUES / CLICS
+           DETECTAR TOQUES
            ================================================== */
 
-        marco.addEventListener("pointerdown", function(event) {
+        marco.addEventListener(
 
-            /*
-             * Evitamos comportamientos extraños del navegador.
-             */
+            "pointerdown",
 
-            event.preventDefault();
-
-
-            /*
-             * Obtenemos el tamaño REAL del marco
-             * que se está mostrando en pantalla.
-             */
-
-            const rect = marco.getBoundingClientRect();
-
-
-            /*
-             * Coordenada del toque dentro del marco.
-             */
-
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-
-            /*
-             * Convertimos la posición de pantalla
-             * a las coordenadas originales del GIF:
-             *
-             * 1920 × 1080
-             */
-
-            const x1920 = (x / rect.width) * 1920;
-            const y1080 = (y / rect.height) * 1080;
-
-
-            console.log(
-                "Toque:",
-                Math.round(x1920),
-                Math.round(y1080),
-                "Escena:",
-                escenaActual
-            );
-
-
-            /* ==================================================
-               GIF 2
-               ================================================== */
-
-            if (escenaActual === "gif-2") {
-
-                /*
-                 * INICIAR PARTIDA
-                 *
-                 * Zona aproximada:
-                 * X: 680 - 1290
-                 * Y: 620 - 730
-                 */
-
-                if (
-                    x1920 >= 680 &&
-                    x1920 <= 1290 &&
-                    y1080 >= 620 &&
-                    y1080 <= 730
-                ) {
-
-                    console.log("INICIAR PARTIDA");
-
-                    mostrarEscena("gif-4");
-
-                    return;
-                }
+            function(event) {
 
 
                 /*
-                 * SALIR
-                 *
-                 * Zona:
-                 * X: 680 - 970
-                 * Y: 700 - 810
+                 * Evitamos que el navegador
+                 * haga zoom o algún gesto.
                  */
 
-                if (
-                    x1920 >= 680 &&
-                    x1920 <= 970 &&
-                    y1080 >= 700 &&
-                    y1080 <= 810
-                ) {
+                event.preventDefault();
 
-                    console.log("SALIR");
-
-                    mostrarEscena("gif-3");
-
-                    return;
-                }
-            }
-
-
-            /* ==================================================
-               GIF 3
-               ================================================== */
-
-            if (escenaActual === "gif-3") {
 
                 /*
-                 * VOLVER AL INICIO
-                 *
-                 * Zona:
-                 * X: 480 - 1120
-                 * Y: 620 - 735
+                 * Obtenemos el tamaño real
+                 * del marco en pantalla.
                  */
 
-                if (
-                    x1920 >= 480 &&
-                    x1920 <= 1120 &&
-                    y1080 >= 620 &&
-                    y1080 <= 735
-                ) {
+                const rect =
+                    marco.getBoundingClientRect();
 
-                    console.log("VOLVER AL INICIO");
-
-                    mostrarEscena("gif-2");
-
-                    return;
-                }
-            }
-
-
-            /* ==================================================
-               GIF 4
-               ================================================== */
-
-            if (escenaActual === "gif-4") {
 
                 /*
-                 * PLAY
-                 *
-                 * Zona:
-                 * X: 650 - 1050
-                 * Y: 830 - 1010
+                 * Posición del toque
+                 * dentro del marco.
                  */
 
+                const x =
+                    event.clientX -
+                    rect.left;
+
+
+                const y =
+                    event.clientY -
+                    rect.top;
+
+
+                /*
+                 * Convertimos la posición
+                 * a las coordenadas originales
+                 * de los GIF:
+                 *
+                 * 1920 x 1080
+                 */
+
+                const x1920 =
+                    (x / rect.width) *
+                    1920;
+
+
+                const y1080 =
+                    (y / rect.height) *
+                    1080;
+
+
+                console.log(
+                    "Toque:",
+                    Math.round(x1920),
+                    Math.round(y1080),
+                    "Escena:",
+                    escenaActual
+                );
+
+
+                /* ==================================================
+                   GIF 2 — MENÚ PRINCIPAL
+                   ================================================== */
+
                 if (
-                    x1920 >= 650 &&
-                    x1920 <= 1050 &&
-                    y1080 >= 830 &&
-                    y1080 <= 1010
+                    escenaActual ===
+                    "gif-2"
                 ) {
 
-                    console.log("PLAY");
 
                     /*
-                     * POR AHORA NO CAMBIAMOS DE ESCENA.
+                     * INICIAR PARTIDA
                      *
-                     * Aquí posteriormente colocaremos
-                     * lo que quieres que ocurra al tocar PLAY.
+                     * Zona:
+                     *
+                     * X: 680 - 1290
+                     * Y: 620 - 730
                      */
 
-                    return;
+                    if (
+
+                        x1920 >= 680 &&
+
+                        x1920 <= 1290 &&
+
+                        y1080 >= 620 &&
+
+                        y1080 <= 730
+
+                    ) {
+
+
+                        console.log(
+                            "INICIAR PARTIDA"
+                        );
+
+
+                        mostrarEscena(
+                            "gif-4"
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * SALIR
+                     *
+                     * Zona:
+                     *
+                     * X: 680 - 970
+                     * Y: 700 - 810
+                     */
+
+                    if (
+
+                        x1920 >= 680 &&
+
+                        x1920 <= 970 &&
+
+                        y1080 >= 700 &&
+
+                        y1080 <= 810
+
+                    ) {
+
+
+                        console.log(
+                            "SALIR"
+                        );
+
+
+                        mostrarEscena(
+                            "gif-3"
+                        );
+
+
+                        return;
+
+                    }
+
                 }
+
+
+                /* ==================================================
+                   GIF 3 — VOLVER AL INICIO
+                   ================================================== */
+
+                if (
+                    escenaActual ===
+                    "gif-3"
+                ) {
+
+
+                    /*
+                     * VOLVER AL INICIO
+                     *
+                     * Zona:
+                     *
+                     * X: 480 - 1120
+                     * Y: 620 - 735
+                     */
+
+                    if (
+
+                        x1920 >= 480 &&
+
+                        x1920 <= 1120 &&
+
+                        y1080 >= 620 &&
+
+                        y1080 <= 735
+
+                    ) {
+
+
+                        console.log(
+                            "VOLVER AL INICIO"
+                        );
+
+
+                        mostrarEscena(
+                            "gif-2"
+                        );
+
+
+                        return;
+
+                    }
+
+                }
+
+
+                /* ==================================================
+                   GIF 4 — PLAY
+                   ================================================== */
+
+                if (
+                    escenaActual ===
+                    "gif-4"
+                ) {
+
+
+                    /*
+                     * PLAY
+                     *
+                     * Zona:
+                     *
+                     * X: 650 - 1050
+                     * Y: 830 - 1010
+                     */
+
+                    if (
+
+                        x1920 >= 650 &&
+
+                        x1920 <= 1050 &&
+
+                        y1080 >= 830 &&
+
+                        y1080 <= 1010
+
+                    ) {
+
+
+                        console.log(
+                            "PLAY"
+                        );
+
+
+                        /*
+                         * Al tocar PLAY:
+                         *
+                         * GIF 4
+                         * ↓
+                         * GIF 5
+                         */
+
+                        mostrarEscena(
+                            "gif-5"
+                        );
+
+
+                        return;
+
+                    }
+
+                }
+
+
+                /* ==================================================
+                   GIF 5
+                   ================================================== */
+
+                if (
+                    escenaActual ===
+                    "gif-5"
+                ) {
+
+
+                    /*
+                     * POR AHORA NO HAY
+                     * NINGUNA ACCIÓN.
+                     *
+                     * Si se toca la pantalla,
+                     * permanece en GIF 5.
+                     */
+
+                    console.log(
+                        "GIF 5 — sin acción"
+                    );
+
+
+                    return;
+
+                }
+
+
+            },
+
+            {
+                passive: false
             }
 
-        }, { passive: false });
+        );
 
 
         /* ==================================================
-           EVITAR ZOOM / GESTOS DEL NAVEGADOR
+           EVITAR GESTOS DEL NAVEGADOR
            ================================================== */
 
-        document.addEventListener("gesturestart", function(event) {
-            event.preventDefault();
-        });
+        document.addEventListener(
+            "gesturestart",
+            function(event) {
 
-        document.addEventListener("gesturechange", function(event) {
-            event.preventDefault();
-        });
+                event.preventDefault();
 
-        document.addEventListener("gestureend", function(event) {
-            event.preventDefault();
-        });
+            }
+        );
+
+
+        document.addEventListener(
+            "gesturechange",
+            function(event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        document.addEventListener(
+            "gestureend",
+            function(event) {
+
+                event.preventDefault();
+
+            }
+        );
 
 
     </script>
