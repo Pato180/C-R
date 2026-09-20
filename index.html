@@ -162,7 +162,7 @@
 
 
         /* =========================
-           TEXTO ORIENTACIÓN
+           TEXTO
            ========================= */
 
         .titulo-orientacion {
@@ -206,10 +206,10 @@
 
 
         /* =========================
-           CONTENEDORES DE GIFS
+           GIFS DE INICIO
            ========================= */
 
-        .gif-contenedor {
+        .gif-inicio {
 
             position: fixed;
 
@@ -222,56 +222,13 @@
             width: 100dvw;
             height: 100dvh;
 
+            object-fit: contain;
+
+            background: #0a0512;
+
             display: none;
 
             z-index: 5000;
-
-            background: #0a0512;
-        }
-
-        .gif-inicio {
-
-            width: 100%;
-            height: 100%;
-
-            object-fit: contain;
-        }
-
-
-        /* =========================
-           ZONAS INTERACTIVAS (BOTONES INVISIBLES)
-           ========================= */
-
-        .btn-zona {
-            position: absolute;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 6000;
-            outline: none;
-        }
-
-        /* Posicionamiento para las opciones de 2-.gif */
-        #btn-iniciar {
-            top: 61%;
-            left: 36%;
-            width: 28%;
-            height: 6%;
-        }
-
-        #btn-salir {
-            top: 68%;
-            left: 36%;
-            width: 28%;
-            height: 6%;
-        }
-
-        /* Posicionamiento para la opción de 3-.gif */
-        #btn-volver {
-            top: 58%;
-            left: 26%;
-            width: 30%;
-            height: 7%;
         }
 
 
@@ -316,6 +273,10 @@
 <body>
 
 
+    <!-- =====================================
+         AVISO DE GIRAR PANTALLA
+         ===================================== -->
+
     <div id="aviso-orientacion">
 
         <div class="telefono-contenedor">
@@ -340,45 +301,52 @@
     </div>
 
 
+    <!-- =====================================
+         CONTENIDO PRINCIPAL
+         ===================================== -->
+
     <div id="contenido"></div>
 
 
-    <div id="contenedor-gif-1" class="gif-contenedor">
-        <img class="gif-inicio" src="./img/1-.gif" alt="Nuestra historia">
-    </div>
+    <!-- =====================================
+         GIF 1
+         ===================================== -->
+
+    <img
+        id="gif-1"
+        class="gif-inicio"
+        src="./img/1-.gif"
+        alt="Nuestra historia"
+    >
 
 
-    <div id="contenedor-gif-2" class="gif-contenedor">
-        <img class="gif-inicio" src="./img/2-.gif" alt="Menú principal">
-        <button id="btn-iniciar" class="btn-zona" aria-label="Iniciar Partida"></button>
-        <button id="btn-salir" class="btn-zona" aria-label="Salir"></button>
-    </div>
+    <!-- =====================================
+         GIF 2
+         ===================================== -->
+
+    <img
+        id="gif-2"
+        class="gif-inicio"
+        src="./img/2-.gif"
+        alt="Nuestra historia"
+    >
 
 
-    <div id="contenedor-gif-3" class="gif-contenedor">
-        <img class="gif-inicio" src="./img/3-.gif" alt="Pantalla de salida">
-        <button id="btn-volver" class="btn-zona" aria-label="Volver al inicio"></button>
-    </div>
-
-
-    <div id="contenedor-gif-4" class="gif-contenedor">
-        <img class="gif-inicio" src="./img/4-.gif" alt="Partida iniciada">
-    </div>
-
+    <!-- =====================================
+         JAVASCRIPT
+         ===================================== -->
 
     <script>
 
-        const contenedorGif1 = document.getElementById("contenedor-gif-1");
-        const contenedorGif2 = document.getElementById("contenedor-gif-2");
-        const contenedorGif3 = document.getElementById("contenedor-gif-3");
-        const contenedorGif4 = document.getElementById("contenedor-gif-4");
-
-        const btnIniciar = document.getElementById("btn-iniciar");
-        const btnSalir = document.getElementById("btn-salir");
-        const btnVolver = document.getElementById("btn-volver");
+        const gif1 = document.getElementById("gif-1");
+        const gif2 = document.getElementById("gif-2");
 
         let inicioMostrado = false;
 
+
+        /* =====================================
+           COMPROBAR SI ESTÁ HORIZONTAL
+           ===================================== */
 
         function estaHorizontal() {
 
@@ -389,13 +357,9 @@
         }
 
 
-        function ocultarTodosLosGifs() {
-            contenedorGif1.style.display = "none";
-            contenedorGif2.style.display = "none";
-            contenedorGif3.style.display = "none";
-            contenedorGif4.style.display = "none";
-        }
-
+        /* =====================================
+           INICIAR HISTORIA
+           ===================================== */
 
         function iniciarHistoria() {
 
@@ -409,62 +373,72 @@
 
             inicioMostrado = true;
 
-            // Mostrar GIF 1
-            ocultarTodosLosGifs();
-            contenedorGif1.style.display = "block";
 
-            // Transición al GIF 2 a los 7 segundos
+            /* =========================
+               MOSTRAR GIF 1
+               ========================= */
+
+            gif1.style.display = "block";
+
+
+            /* =========================
+               DESPUÉS DE 7 SEGUNDOS
+               ========================= */
+
             setTimeout(function() {
-                ocultarTodosLosGifs();
-                contenedorGif2.style.display = "block";
+
+                gif1.style.display = "none";
+
+                gif2.style.display = "block";
+
             }, 7000);
 
         }
 
 
         /* =====================================
-           EVENTOS DE NAVEGACIÓN
-           ===================================== */
-
-        // Al hacer clic en INICIAR PARTIDA -> Ir a 4-.gif
-        btnIniciar.addEventListener("click", function() {
-            ocultarTodosLosGifs();
-            contenedorGif4.style.display = "block";
-        });
-
-        // Al hacer clic en SALIR -> Ir a 3-.gif
-        btnSalir.addEventListener("click", function() {
-            ocultarTodosLosGifs();
-            contenedorGif3.style.display = "block";
-        });
-
-        // Al hacer clic en VOLVER AL INICIO -> Regresar a 2-.gif
-        btnVolver.addEventListener("click", function() {
-            ocultarTodosLosGifs();
-            contenedorGif2.style.display = "block";
-        });
-
-
-        /* =====================================
-           VERIFICACIONES DE ORIENTACIÓN
+           COMPROBAR AL CARGAR
            ===================================== */
 
         iniciarHistoria();
 
-        window.addEventListener("orientationchange", function() {
-            setTimeout(iniciarHistoria, 300);
-        });
 
-        window.addEventListener("resize", function() {
-            setTimeout(iniciarHistoria, 300);
-        });
+        /* =====================================
+           COMPROBAR CUANDO CAMBIA ORIENTACIÓN
+           ===================================== */
+
+        window.addEventListener(
+            "orientationchange",
+            function() {
+
+                setTimeout(
+                    iniciarHistoria,
+                    300
+                );
+
+            }
+        );
+
+
+        /* =====================================
+           COMPROBAR CUANDO CAMBIA EL TAMAÑO
+           ===================================== */
+
+        window.addEventListener(
+            "resize",
+            function() {
+
+                setTimeout(
+                    iniciarHistoria,
+                    300
+                );
+
+            }
+        );
+
 
     </script>
 
-
-</body>
-
-</html>
 
 </body>
 
