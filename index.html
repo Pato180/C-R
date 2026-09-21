@@ -7,8 +7,12 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     >
+
+    <!-- Permite abrirla en pantalla completa al agregarla a la pantalla de inicio -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
     <title>Nuestra historia</title>
 
@@ -214,6 +218,18 @@
 
             height: min(56.25vw, 100vh);
 
+
+            /*
+             * Igual que arriba pero usando "dvh": la altura
+             * REAL visible en el celular (descontando la barra
+             * del navegador). Si el navegador no lo entiende,
+             * usa las dos líneas anteriores.
+             */
+
+            width: min(100vw, 177.7777778dvh);
+
+            height: min(56.25vw, 100dvh);
+
             aspect-ratio: 16 / 9;
 
             overflow: hidden;
@@ -282,6 +298,27 @@
             color: white;
 
             font-size: 18px;
+        }
+
+
+        /* ==================================================
+           MODO "ESTIRAR": LA IMAGEN OCUPA TODA LA PANTALLA
+           (se activa desde el script con ESTIRAR_IMAGEN_A_PANTALLA)
+           ================================================== */
+
+        body.estirar #marco-historia {
+
+            width: 100%;
+
+            height: 100%;
+
+            aspect-ratio: auto;
+        }
+
+
+        body.estirar .gif-inicio {
+
+            object-fit: fill;
         }
 
 
@@ -1259,6 +1296,113 @@
            ================================================== */
 
         esperarGifInicial();
+
+
+        /* ==================================================
+           PANTALLA COMPLETA Y AJUSTE A TODO EL CELULAR
+           ================================================== */
+
+        /*
+         * true  = la imagen se estira para ocupar TODA la
+         *         pantalla. No se corta nada y los botones
+         *         siguen funcionando, pero la imagen puede
+         *         verse un poco más ancha de lo normal.
+         *
+         * false = la imagen mantiene su proporción 16:9
+         *         (pueden quedar franjas oscuras a los lados).
+         */
+
+        const ESTIRAR_IMAGEN_A_PANTALLA = true;
+
+
+        if (ESTIRAR_IMAGEN_A_PANTALLA) {
+
+            document.body.classList.add("estirar");
+
+        }
+
+
+        /*
+         * Los navegadores solo permiten la pantalla completa
+         * después de un toque de la persona, así que se activa
+         * con el primer toque en la pantalla.
+         */
+
+        let pantallaCompletaLograda = false;
+
+
+        function detectarPantallaCompleta() {
+
+            if (
+                document.fullscreenElement ||
+                document.webkitFullscreenElement
+            ) {
+
+                pantallaCompletaLograda = true;
+
+            }
+
+        }
+
+
+        document.addEventListener(
+            "fullscreenchange",
+            detectarPantallaCompleta
+        );
+
+
+        document.addEventListener(
+            "webkitfullscreenchange",
+            detectarPantallaCompleta
+        );
+
+
+        document.addEventListener(
+            "pointerup",
+            function() {
+
+
+                if (pantallaCompletaLograda) {
+                    return;
+                }
+
+
+                const elemento =
+                    document.documentElement;
+
+
+                const pedirPantallaCompleta =
+                    elemento.requestFullscreen ||
+                    elemento.webkitRequestFullscreen;
+
+
+                if (!pedirPantallaCompleta) {
+                    return;
+                }
+
+
+                try {
+
+                    const resultado =
+                        pedirPantallaCompleta.call(elemento);
+
+
+                    if (resultado && resultado.catch) {
+
+                        resultado.catch(function() {});
+
+                    }
+
+                } catch (error) {
+
+                    console.log(
+                        "No se pudo activar la pantalla completa"
+                    );
+
+                }
+
+            }
+        );
 
 
         /* ==================================================
