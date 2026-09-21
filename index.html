@@ -694,23 +694,23 @@
            CARGA DE IMÁGENES
            ================================================== */
 
-        const imagenes = [
+       const imagenes = [
 
-            gif1,
-            gif2,
-            gif3,
-            gif4,
-            gif5,
+    gif1,
+    gif2,
+    gif3,
+    gif4,
+    gif5
 
-            gif6,
-            gif7,
+];
+if (
+    imagenesCargadas ===
+    imagenes.length
+) {
 
-            gif13,
-            gif14,
+    iniciarHistoria();
 
-            gif18,
-            gif19
-
+}
         ];
 
 
@@ -756,43 +756,23 @@
            INICIAR HISTORIA
            ================================================== */
 
-        function iniciarHistoria() {
+function iniciarHistoria(){
+    cargando.style.display="none";
 
+    mostrarEscena("gif-1");
 
-            /*
-             * Quitamos la pantalla de carga.
-             */
+    clearTimeout(temporizadorGif1);
 
-            cargando.style.display = "none";
-
-
-            /*
-             * Comenzamos con GIF 1.
-             */
-
-            mostrarEscena("gif-1");
-
-
-            /*
-             * Después de 5 segundos
-             * pasamos automáticamente
-             * al GIF 2.
-             */
-
-            clearTimeout(temporizadorGif1);
-
-
-            temporizadorGif1 =
-                setTimeout(
-                    () => {
-
-                        mostrarEscena("gif-2");
-
-                    },
-                    5000
-                );
-
-        }
+    // Esperamos un instante para que el GIF realmente aparezca
+    // y luego contamos los 5 segundos.
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            temporizadorGif1 = setTimeout(() => {
+                mostrarEscena("gif-2");
+            }, 5000);
+        }, 100);
+    });
+}
 
 
         /*
@@ -809,6 +789,30 @@
 
         }
 
+        /* ==================================================
+   CARGAR EL RESTO DE LAS IMÁGENES EN SEGUNDO PLANO
+   ================================================== */
+
+setTimeout(() => {
+
+    const imagenesSecundarias = [
+        gif6,
+        gif7,
+        gif13,
+        gif14,
+        gif18,
+        gif19
+    ];
+
+    imagenesSecundarias.forEach((imagen) => {
+
+        const precarga = new Image();
+
+        precarga.src = imagen.src;
+
+    });
+
+}, 100);
 
         /* ==================================================
            DETECTAR TOQUES
