@@ -431,6 +431,56 @@
             >
 
 
+            <!-- GIF 8 -->
+
+            <img
+                id="gif-8"
+                class="gif-inicio"
+                src="./img/8-.gif"
+                alt="Cartita continuación 1"
+            >
+
+
+            <!-- GIF 9 -->
+
+            <img
+                id="gif-9"
+                class="gif-inicio"
+                src="./img/9-.gif"
+                alt="Cartita continuación 2"
+            >
+
+
+            <!-- GIF 10 -->
+
+            <img
+                id="gif-10"
+                class="gif-inicio"
+                src="./img/10-.gif"
+                alt="Cartita continuación 3"
+            >
+
+
+            <!-- GIF 11 -->
+
+            <img
+                id="gif-11"
+                class="gif-inicio"
+                src="./img/11-.gif"
+                alt="Cartita continuación 4"
+            >
+
+
+            <!-- GIF 12 -->
+
+            <img
+                id="gif-12"
+                class="gif-inicio"
+                src="./img/12-.gif"
+                alt="Cartita final"
+            >
+
+
             <!-- GIF 13 -->
 
             <img
@@ -451,6 +501,36 @@
             >
 
 
+            <!-- GIF 15 -->
+
+            <img
+                id="gif-15"
+                class="gif-inicio"
+                src="./img/15-.gif"
+                alt="Sorpresa continuación 1"
+            >
+
+
+            <!-- GIF 16 -->
+
+            <img
+                id="gif-16"
+                class="gif-inicio"
+                src="./img/16-.gif"
+                alt="Sorpresa continuación 2"
+            >
+
+
+            <!-- GIF 17 -->
+
+            <img
+                id="gif-17"
+                class="gif-inicio"
+                src="./img/17-.gif"
+                alt="Sorpresa final"
+            >
+
+
             <!-- GIF 18 -->
 
             <img
@@ -468,6 +548,46 @@
                 class="gif-inicio"
                 src="./img/19-.gif"
                 alt="Carrusel abierto"
+            >
+
+
+            <!-- GIF 20 -->
+
+            <img
+                id="gif-20"
+                class="gif-inicio"
+                src="./img/20-.gif"
+                alt="Carrusel continuación 1"
+            >
+
+
+            <!-- GIF 21 -->
+
+            <img
+                id="gif-21"
+                class="gif-inicio"
+                src="./img/21-.gif"
+                alt="Carrusel continuación 2"
+            >
+
+
+            <!-- GIF 22 -->
+
+            <img
+                id="gif-22"
+                class="gif-inicio"
+                src="./img/22-.gif"
+                alt="Carrusel continuación 3"
+            >
+
+
+            <!-- GIF 23 -->
+
+            <img
+                id="gif-23"
+                class="gif-inicio"
+                src="./img/23-.gif"
+                alt="Carrusel final"
             >
 
         </div>
@@ -514,6 +634,26 @@
             document.getElementById("gif-7");
 
 
+        const gif8 =
+            document.getElementById("gif-8");
+
+
+        const gif9 =
+            document.getElementById("gif-9");
+
+
+        const gif10 =
+            document.getElementById("gif-10");
+
+
+        const gif11 =
+            document.getElementById("gif-11");
+
+
+        const gif12 =
+            document.getElementById("gif-12");
+
+
         const gif13 =
             document.getElementById("gif-13");
 
@@ -522,12 +662,40 @@
             document.getElementById("gif-14");
 
 
+        const gif15 =
+            document.getElementById("gif-15");
+
+
+        const gif16 =
+            document.getElementById("gif-16");
+
+
+        const gif17 =
+            document.getElementById("gif-17");
+
+
         const gif18 =
             document.getElementById("gif-18");
 
 
         const gif19 =
             document.getElementById("gif-19");
+
+
+        const gif20 =
+            document.getElementById("gif-20");
+
+
+        const gif21 =
+            document.getElementById("gif-21");
+
+
+        const gif22 =
+            document.getElementById("gif-22");
+
+
+        const gif23 =
+            document.getElementById("gif-23");
 
 
         const cargando =
@@ -540,7 +708,43 @@
 
         let escenaActual = null;
 
-        let temporizadorGif1 = null;
+        let temporizadorEscena = null;
+
+
+        /* ==================================================
+           AVANCE AUTOMÁTICO ENTRE ESCENAS
+
+           Cada escena de esta lista se queda en pantalla
+           el tiempo indicado (en milisegundos) y luego
+           pasa sola a la siguiente.
+           ================================================== */
+
+        const avanceAutomatico = {
+
+            /* Cartita: 10 segundos cada una */
+
+            "gif-7":  { siguiente: "gif-8",  tiempo: 10000 },
+            "gif-8":  { siguiente: "gif-9",  tiempo: 10000 },
+            "gif-9":  { siguiente: "gif-10", tiempo: 10000 },
+            "gif-10": { siguiente: "gif-11", tiempo: 10000 },
+            "gif-11": { siguiente: "gif-12", tiempo: 10000 },
+
+
+            /* Sorpresa: 7 segundos cada una */
+
+            "gif-14": { siguiente: "gif-15", tiempo: 7000 },
+            "gif-15": { siguiente: "gif-16", tiempo: 7000 },
+            "gif-16": { siguiente: "gif-17", tiempo: 7000 },
+
+
+            /* Carrusel: 6 segundos cada una */
+
+            "gif-19": { siguiente: "gif-20", tiempo: 6000 },
+            "gif-20": { siguiente: "gif-21", tiempo: 6000 },
+            "gif-21": { siguiente: "gif-22", tiempo: 6000 },
+            "gif-22": { siguiente: "gif-23", tiempo: 6000 }
+
+        };
 
 
         /* ==================================================
@@ -550,6 +754,14 @@
         function mostrarEscena(escena) {
 
 
+            /*
+             * Cancelamos cualquier avance automático
+             * que estuviera pendiente.
+             */
+
+            clearTimeout(temporizadorEscena);
+
+
             gif1.classList.remove("activo");
             gif2.classList.remove("activo");
             gif3.classList.remove("activo");
@@ -557,10 +769,22 @@
             gif5.classList.remove("activo");
             gif6.classList.remove("activo");
             gif7.classList.remove("activo");
+            gif8.classList.remove("activo");
+            gif9.classList.remove("activo");
+            gif10.classList.remove("activo");
+            gif11.classList.remove("activo");
+            gif12.classList.remove("activo");
             gif13.classList.remove("activo");
             gif14.classList.remove("activo");
+            gif15.classList.remove("activo");
+            gif16.classList.remove("activo");
+            gif17.classList.remove("activo");
             gif18.classList.remove("activo");
             gif19.classList.remove("activo");
+            gif20.classList.remove("activo");
+            gif21.classList.remove("activo");
+            gif22.classList.remove("activo");
+            gif23.classList.remove("activo");
 
 
             if (escena === "gif-1") {
@@ -598,6 +822,31 @@
             }
 
 
+            if (escena === "gif-8") {
+                gif8.classList.add("activo");
+            }
+
+
+            if (escena === "gif-9") {
+                gif9.classList.add("activo");
+            }
+
+
+            if (escena === "gif-10") {
+                gif10.classList.add("activo");
+            }
+
+
+            if (escena === "gif-11") {
+                gif11.classList.add("activo");
+            }
+
+
+            if (escena === "gif-12") {
+                gif12.classList.add("activo");
+            }
+
+
             if (escena === "gif-13") {
                 gif13.classList.add("activo");
             }
@@ -605,6 +854,21 @@
 
             if (escena === "gif-14") {
                 gif14.classList.add("activo");
+            }
+
+
+            if (escena === "gif-15") {
+                gif15.classList.add("activo");
+            }
+
+
+            if (escena === "gif-16") {
+                gif16.classList.add("activo");
+            }
+
+
+            if (escena === "gif-17") {
+                gif17.classList.add("activo");
             }
 
 
@@ -618,6 +882,26 @@
             }
 
 
+            if (escena === "gif-20") {
+                gif20.classList.add("activo");
+            }
+
+
+            if (escena === "gif-21") {
+                gif21.classList.add("activo");
+            }
+
+
+            if (escena === "gif-22") {
+                gif22.classList.add("activo");
+            }
+
+
+            if (escena === "gif-23") {
+                gif23.classList.add("activo");
+            }
+
+
             escenaActual = escena;
 
 
@@ -625,6 +909,25 @@
                 "Escena actual:",
                 escenaActual
             );
+
+
+            /*
+             * Si esta escena tiene avance automático,
+             * programamos el cambio a la siguiente.
+             */
+
+            const avance = avanceAutomatico[escena];
+
+
+            if (avance) {
+
+                temporizadorEscena = setTimeout(() => {
+
+                    mostrarEscena(avance.siguiente);
+
+                }, avance.tiempo);
+
+            }
 
         }
 
@@ -635,6 +938,9 @@
            IMPORTANTE:
            Ya NO esperamos a que todos los GIF estén
            descargados.
+
+           El GIF 1 se mantiene en pantalla hasta que
+           la persona toque la pantalla.
            ================================================== */
 
         function iniciarHistoria() {
@@ -644,33 +950,6 @@
 
 
             mostrarEscena("gif-1");
-
-
-            clearTimeout(temporizadorGif1);
-
-
-            /*
-             * Esperamos un instante para asegurarnos
-             * de que GIF 1 ya está visible.
-             */
-
-            requestAnimationFrame(() => {
-
-
-                setTimeout(() => {
-
-
-                    temporizadorGif1 = setTimeout(() => {
-
-                        mostrarEscena("gif-2");
-
-                    }, 5000);
-
-
-                }, 100);
-
-
-            });
 
 
             /*
@@ -817,6 +1096,51 @@
             }
 
 
+            if (escena === "gif-7") {
+
+                cargarImagen(gif7);
+
+                cargarImagen(gif8);
+
+            }
+
+
+            if (escena === "gif-8") {
+
+                cargarImagen(gif8);
+
+                cargarImagen(gif9);
+
+            }
+
+
+            if (escena === "gif-9") {
+
+                cargarImagen(gif9);
+
+                cargarImagen(gif10);
+
+            }
+
+
+            if (escena === "gif-10") {
+
+                cargarImagen(gif10);
+
+                cargarImagen(gif11);
+
+            }
+
+
+            if (escena === "gif-11") {
+
+                cargarImagen(gif11);
+
+                cargarImagen(gif12);
+
+            }
+
+
             if (escena === "gif-13") {
 
                 cargarImagen(gif13);
@@ -826,11 +1150,74 @@
             }
 
 
+            if (escena === "gif-14") {
+
+                cargarImagen(gif14);
+
+                cargarImagen(gif15);
+
+            }
+
+
+            if (escena === "gif-15") {
+
+                cargarImagen(gif15);
+
+                cargarImagen(gif16);
+
+            }
+
+
+            if (escena === "gif-16") {
+
+                cargarImagen(gif16);
+
+                cargarImagen(gif17);
+
+            }
+
+
             if (escena === "gif-18") {
 
                 cargarImagen(gif18);
 
                 cargarImagen(gif19);
+
+            }
+
+
+            if (escena === "gif-19") {
+
+                cargarImagen(gif19);
+
+                cargarImagen(gif20);
+
+            }
+
+
+            if (escena === "gif-20") {
+
+                cargarImagen(gif20);
+
+                cargarImagen(gif21);
+
+            }
+
+
+            if (escena === "gif-21") {
+
+                cargarImagen(gif21);
+
+                cargarImagen(gif22);
+
+            }
+
+
+            if (escena === "gif-22") {
+
+                cargarImagen(gif22);
+
+                cargarImagen(gif23);
 
             }
 
@@ -912,6 +1299,30 @@
                     "Escena:",
                     escenaActual
                 );
+
+
+                /* ==================================================
+                   GIF 1 — TOCAR EN CUALQUIER LUGAR PARA CONTINUAR
+                   ================================================== */
+
+                if (
+                    escenaActual ===
+                    "gif-1"
+                ) {
+
+                    console.log(
+                        "INICIO — CONTINUAR"
+                    );
+
+
+                    mostrarEscena(
+                        "gif-2"
+                    );
+
+
+                    return;
+
+                }
 
 
                 /* ==================================================
@@ -1225,6 +1636,50 @@
 
 
                 /* ==================================================
+                   GIF 12 — BOTÓN BACK (VUELVE AL GIF 5)
+                   ================================================== */
+
+                if (
+                    escenaActual ===
+                    "gif-12"
+                ) {
+
+
+                    /*
+                     * BACK
+                     *
+                     * X: 590 - 940
+                     * Y: 855 - 985
+                     */
+
+                    if (
+
+                        x1920 >= 590 &&
+                        x1920 <= 940 &&
+
+                        y1080 >= 855 &&
+                        y1080 <= 985
+
+                    ) {
+
+                        console.log(
+                            "BACK (GIF 12)"
+                        );
+
+
+                        mostrarEscena(
+                            "gif-5"
+                        );
+
+
+                        return;
+
+                    }
+
+                }
+
+
+                /* ==================================================
                    GIF 13 — SORPRESA
                    ================================================== */
 
@@ -1256,6 +1711,50 @@
 
                         mostrarEscena(
                             "gif-14"
+                        );
+
+
+                        return;
+
+                    }
+
+                }
+
+
+                /* ==================================================
+                   GIF 17 — BOTÓN BACK (VUELVE AL GIF 5)
+                   ================================================== */
+
+                if (
+                    escenaActual ===
+                    "gif-17"
+                ) {
+
+
+                    /*
+                     * BACK
+                     *
+                     * X: 590 - 940
+                     * Y: 855 - 985
+                     */
+
+                    if (
+
+                        x1920 >= 590 &&
+                        x1920 <= 940 &&
+
+                        y1080 >= 855 &&
+                        y1080 <= 985
+
+                    ) {
+
+                        console.log(
+                            "BACK (GIF 17)"
+                        );
+
+
+                        mostrarEscena(
+                            "gif-5"
                         );
 
 
@@ -1304,6 +1803,31 @@
                         return;
 
                     }
+
+                }
+
+
+                /* ==================================================
+                   GIF 23 — TOCAR EN CUALQUIER LUGAR
+                   PARA VOLVER AL GIF 1
+                   ================================================== */
+
+                if (
+                    escenaActual ===
+                    "gif-23"
+                ) {
+
+                    console.log(
+                        "GIF 23 — VOLVER AL GIF 1"
+                    );
+
+
+                    mostrarEscena(
+                        "gif-1"
+                    );
+
+
+                    return;
 
                 }
 
