@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -180,6 +179,7 @@
             100% {
                 transform: rotate(90deg);
             }
+
         }
 
 
@@ -241,21 +241,11 @@
             width: 100%;
             height: 100%;
 
-            /*
-             * Mantiene la proporción original
-             * de los GIF 1920 x 1080.
-             */
-
             object-fit: contain;
 
             display: none;
 
             background: #0a0512;
-
-            /*
-             * El GIF no recibe directamente el toque.
-             * El toque lo recibe #marco-historia.
-             */
 
             pointer-events: none;
 
@@ -308,6 +298,7 @@
             #contenido {
                 display: none;
             }
+
         }
 
 
@@ -320,6 +311,7 @@
             #contenido {
                 display: flex;
             }
+
         }
 
     </style>
@@ -335,9 +327,7 @@
          ================================================== -->
 
     <div id="cargando">
-
         Cargando...
-
     </div>
 
 
@@ -348,16 +338,12 @@
     <div id="aviso-orientacion">
 
         <div class="telefono-contenedor">
-
             <div class="telefono"></div>
-
         </div>
-
 
         <h1>
             Gira tu pantalla
         </h1>
-
 
         <p>
             para comenzar nuestra historia
@@ -375,9 +361,7 @@
         <div id="marco-historia">
 
 
-            <!-- ==================================================
-                 GIF 1
-                 ================================================== -->
+            <!-- GIF 1 -->
 
             <img
                 id="gif-1"
@@ -387,9 +371,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 2
-                 ================================================== -->
+            <!-- GIF 2 -->
 
             <img
                 id="gif-2"
@@ -399,9 +381,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 3
-                 ================================================== -->
+            <!-- GIF 3 -->
 
             <img
                 id="gif-3"
@@ -411,9 +391,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 4
-                 ================================================== -->
+            <!-- GIF 4 -->
 
             <img
                 id="gif-4"
@@ -423,9 +401,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 5
-                 ================================================== -->
+            <!-- GIF 5 -->
 
             <img
                 id="gif-5"
@@ -435,9 +411,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 6
-                 ================================================== -->
+            <!-- GIF 6 -->
 
             <img
                 id="gif-6"
@@ -447,9 +421,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 7
-                 ================================================== -->
+            <!-- GIF 7 -->
 
             <img
                 id="gif-7"
@@ -459,9 +431,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 13
-                 ================================================== -->
+            <!-- GIF 13 -->
 
             <img
                 id="gif-13"
@@ -471,9 +441,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 14
-                 ================================================== -->
+            <!-- GIF 14 -->
 
             <img
                 id="gif-14"
@@ -483,9 +451,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 18
-                 ================================================== -->
+            <!-- GIF 18 -->
 
             <img
                 id="gif-18"
@@ -495,9 +461,7 @@
             >
 
 
-            <!-- ==================================================
-                 GIF 19
-                 ================================================== -->
+            <!-- GIF 19 -->
 
             <img
                 id="gif-19"
@@ -505,7 +469,6 @@
                 src="./img/19-.gif"
                 alt="Carrusel abierto"
             >
-
 
         </div>
 
@@ -577,7 +540,6 @@
 
         let escenaActual = null;
 
-
         let temporizadorGif1 = null;
 
 
@@ -588,37 +550,18 @@
         function mostrarEscena(escena) {
 
 
-            /*
-             * Ocultamos TODOS los GIF.
-             */
-
             gif1.classList.remove("activo");
-
             gif2.classList.remove("activo");
-
             gif3.classList.remove("activo");
-
             gif4.classList.remove("activo");
-
             gif5.classList.remove("activo");
-
             gif6.classList.remove("activo");
-
             gif7.classList.remove("activo");
-
             gif13.classList.remove("activo");
-
             gif14.classList.remove("activo");
-
             gif18.classList.remove("activo");
-
             gif19.classList.remove("activo");
 
-
-            /*
-             * Mostramos únicamente
-             * la escena correspondiente.
-             */
 
             if (escena === "gif-1") {
                 gif1.classList.add("activo");
@@ -675,10 +618,6 @@
             }
 
 
-            /*
-             * Guardamos cuál es la escena actual.
-             */
-
             escenaActual = escena;
 
 
@@ -691,128 +630,236 @@
 
 
         /* ==================================================
-           CARGA DE IMÁGENES
-           ================================================== */
-
-       const imagenes = [
-
-    gif1,
-    gif2,
-    gif3,
-    gif4,
-    gif5
-
-];
-if (
-    imagenesCargadas ===
-    imagenes.length
-) {
-
-    iniciarHistoria();
-
-}
-        ];
-
-
-        let imagenesCargadas = 0;
-
-
-        imagenes.forEach((imagen) => {
-
-
-            if (imagen.complete) {
-
-                imagenesCargadas++;
-
-            }
-
-            else {
-
-                imagen.addEventListener(
-                    "load",
-                    () => {
-
-                        imagenesCargadas++;
-
-
-                        if (
-                            imagenesCargadas ===
-                            imagenes.length
-                        ) {
-
-                            iniciarHistoria();
-
-                        }
-
-                    }
-                );
-
-            }
-
-        });
-
-
-        /* ==================================================
            INICIAR HISTORIA
+           
+           IMPORTANTE:
+           Ya NO esperamos a que todos los GIF estén
+           descargados.
            ================================================== */
 
-function iniciarHistoria(){
-    cargando.style.display="none";
-
-    mostrarEscena("gif-1");
-
-    clearTimeout(temporizadorGif1);
-
-    // Esperamos un instante para que el GIF realmente aparezca
-    // y luego contamos los 5 segundos.
-    requestAnimationFrame(() => {
-        setTimeout(() => {
-            temporizadorGif1 = setTimeout(() => {
-                mostrarEscena("gif-2");
-            }, 5000);
-        }, 100);
-    });
-}
+        function iniciarHistoria() {
 
 
-        /*
-         * Si todas las imágenes
-         * ya estaban cargadas.
-         */
+            cargando.style.display = "none";
 
-        if (
-            imagenesCargadas ===
-            imagenes.length
-        ) {
 
-            iniciarHistoria();
+            mostrarEscena("gif-1");
+
+
+            clearTimeout(temporizadorGif1);
+
+
+            /*
+             * Esperamos un instante para asegurarnos
+             * de que GIF 1 ya está visible.
+             */
+
+            requestAnimationFrame(() => {
+
+
+                setTimeout(() => {
+
+
+                    temporizadorGif1 = setTimeout(() => {
+
+                        mostrarEscena("gif-2");
+
+                    }, 5000);
+
+
+                }, 100);
+
+
+            });
+
+
+            /*
+             * Comenzamos a preparar los siguientes GIF
+             * sin bloquear la historia.
+             */
+
+            cargarImagen(gif2);
+            cargarImagen(gif3);
+            cargarImagen(gif4);
+            cargarImagen(gif5);
 
         }
 
+
         /* ==================================================
-   CARGAR EL RESTO DE LAS IMÁGENES EN SEGUNDO PLANO
-   ================================================== */
+           CARGAR UNA IMAGEN
+           ================================================== */
 
-setTimeout(() => {
+        function cargarImagen(imagen) {
 
-    const imagenesSecundarias = [
-        gif6,
-        gif7,
-        gif13,
-        gif14,
-        gif18,
-        gif19
-    ];
 
-    imagenesSecundarias.forEach((imagen) => {
+            if (!imagen) {
+                return;
+            }
 
-        const precarga = new Image();
 
-        precarga.src = imagen.src;
+            if (imagen.complete && imagen.naturalWidth > 0) {
 
-    });
+                return;
 
-}, 100);
+            }
+
+
+            const ruta = imagen.getAttribute("data-src");
+
+
+            if (ruta) {
+
+                imagen.src = ruta;
+
+                imagen.removeAttribute("data-src");
+
+            }
+
+        }
+
+
+        /* ==================================================
+           COMENZAR CUANDO LA PÁGINA ESTÉ LISTA
+           
+           Solo esperamos al GIF 1.
+           ================================================== */
+
+        function esperarGifInicial() {
+
+
+            if (
+                gif1.complete &&
+                gif1.naturalWidth > 0
+            ) {
+
+                iniciarHistoria();
+
+                return;
+
+            }
+
+
+            gif1.addEventListener(
+                "load",
+                iniciarHistoria,
+                { once: true }
+            );
+
+
+            gif1.addEventListener(
+                "error",
+                () => {
+
+                    console.error(
+                        "No se pudo cargar ./img/1-.gif"
+                    );
+
+                    /*
+                     * Aunque haya un error con el GIF,
+                     * quitamos la pantalla de carga para
+                     * evitar que quede bloqueada.
+                     */
+
+                    iniciarHistoria();
+
+                },
+                { once: true }
+            );
+
+        }
+
+
+        /* ==================================================
+           PREPARAR GIFS SEGÚN EL AVANCE
+           ================================================== */
+
+
+        function prepararEscena(escena) {
+
+
+            if (escena === "gif-2") {
+
+                cargarImagen(gif2);
+
+                cargarImagen(gif3);
+                cargarImagen(gif4);
+
+            }
+
+
+            if (escena === "gif-4") {
+
+                cargarImagen(gif4);
+
+                cargarImagen(gif5);
+
+            }
+
+
+            if (escena === "gif-5") {
+
+                cargarImagen(gif5);
+
+                cargarImagen(gif6);
+                cargarImagen(gif13);
+                cargarImagen(gif18);
+
+            }
+
+
+            if (escena === "gif-6") {
+
+                cargarImagen(gif6);
+
+                cargarImagen(gif7);
+
+            }
+
+
+            if (escena === "gif-13") {
+
+                cargarImagen(gif13);
+
+                cargarImagen(gif14);
+
+            }
+
+
+            if (escena === "gif-18") {
+
+                cargarImagen(gif18);
+
+                cargarImagen(gif19);
+
+            }
+
+        }
+
+
+        /*
+         * Guardamos la función original para poder
+         * preparar las siguientes escenas automáticamente.
+         */
+
+        const mostrarEscenaOriginal = mostrarEscena;
+
+
+        mostrarEscena = function(escena) {
+
+            mostrarEscenaOriginal(escena);
+
+            prepararEscena(escena);
+
+        };
+
+
+        /* ==================================================
+           INICIAR
+           ================================================== */
+
+        esperarGifInicial();
+
 
         /* ==================================================
            DETECTAR TOQUES
@@ -825,27 +872,12 @@ setTimeout(() => {
             function(event) {
 
 
-                /*
-                 * Evitamos que el navegador
-                 * haga zoom o algún gesto.
-                 */
-
                 event.preventDefault();
 
-
-                /*
-                 * Obtenemos el tamaño real
-                 * del marco en pantalla.
-                 */
 
                 const rect =
                     marco.getBoundingClientRect();
 
-
-                /*
-                 * Posición del toque
-                 * dentro del marco.
-                 */
 
                 const x =
                     event.clientX -
@@ -858,11 +890,9 @@ setTimeout(() => {
 
 
                 /*
-                 * Convertimos la posición
+                 * Convertimos la posición del toque
                  * a las coordenadas originales
-                 * de los GIF:
-                 *
-                 * 1920 x 1080
+                 * 1920 x 1080.
                  */
 
                 const x1920 =
@@ -897,8 +927,6 @@ setTimeout(() => {
                     /*
                      * INICIAR PARTIDA
                      *
-                     * Zona:
-                     *
                      * X: 680 - 1290
                      * Y: 620 - 730
                      */
@@ -906,15 +934,12 @@ setTimeout(() => {
                     if (
 
                         x1920 >= 680 &&
-
                         x1920 <= 1290 &&
 
                         y1080 >= 620 &&
-
                         y1080 <= 730
 
                     ) {
-
 
                         console.log(
                             "INICIAR PARTIDA"
@@ -934,8 +959,6 @@ setTimeout(() => {
                     /*
                      * SALIR
                      *
-                     * Zona:
-                     *
                      * X: 680 - 970
                      * Y: 700 - 810
                      */
@@ -943,15 +966,12 @@ setTimeout(() => {
                     if (
 
                         x1920 >= 680 &&
-
                         x1920 <= 970 &&
 
                         y1080 >= 700 &&
-
                         y1080 <= 810
 
                     ) {
-
 
                         console.log(
                             "SALIR"
@@ -981,10 +1001,6 @@ setTimeout(() => {
 
 
                     /*
-                     * VOLVER AL INICIO
-                     *
-                     * Zona:
-                     *
                      * X: 480 - 1120
                      * Y: 620 - 735
                      */
@@ -992,15 +1008,12 @@ setTimeout(() => {
                     if (
 
                         x1920 >= 480 &&
-
                         x1920 <= 1120 &&
 
                         y1080 >= 620 &&
-
                         y1080 <= 735
 
                     ) {
-
 
                         console.log(
                             "VOLVER AL INICIO"
@@ -1030,10 +1043,6 @@ setTimeout(() => {
 
 
                     /*
-                     * PLAY
-                     *
-                     * Zona:
-                     *
                      * X: 650 - 1050
                      * Y: 830 - 1010
                      */
@@ -1041,28 +1050,17 @@ setTimeout(() => {
                     if (
 
                         x1920 >= 650 &&
-
                         x1920 <= 1050 &&
 
                         y1080 >= 830 &&
-
                         y1080 <= 1010
 
                     ) {
-
 
                         console.log(
                             "PLAY"
                         );
 
-
-                        /*
-                         * Al tocar PLAY:
-                         *
-                         * GIF 4
-                         * ↓
-                         * GIF 5
-                         */
 
                         mostrarEscena(
                             "gif-5"
@@ -1089,28 +1087,19 @@ setTimeout(() => {
                     /*
                      * CARTITA
                      *
-                     * Zona:
-                     *
                      * X: 255 - 565
                      * Y: 670 - 795
-                     *
-                     * GIF 5
-                     * ↓
-                     * GIF 6
                      */
 
                     if (
 
                         x1920 >= 255 &&
-
                         x1920 <= 565 &&
 
                         y1080 >= 670 &&
-
                         y1080 <= 795
 
                     ) {
-
 
                         console.log(
                             "CARTITA"
@@ -1130,28 +1119,19 @@ setTimeout(() => {
                     /*
                      * SORPRESA
                      *
-                     * Zona:
-                     *
                      * X: 810 - 1120
                      * Y: 670 - 795
-                     *
-                     * GIF 5
-                     * ↓
-                     * GIF 13
                      */
 
                     if (
 
                         x1920 >= 810 &&
-
                         x1920 <= 1120 &&
 
                         y1080 >= 670 &&
-
                         y1080 <= 795
 
                     ) {
-
 
                         console.log(
                             "SORPRESA"
@@ -1171,28 +1151,19 @@ setTimeout(() => {
                     /*
                      * CARRUSEL
                      *
-                     * Zona:
-                     *
                      * X: 1365 - 1675
                      * Y: 670 - 795
-                     *
-                     * GIF 5
-                     * ↓
-                     * GIF 18
                      */
 
                     if (
 
                         x1920 >= 1365 &&
-
                         x1920 <= 1675 &&
 
                         y1080 >= 670 &&
-
                         y1080 <= 795
 
                     ) {
-
 
                         console.log(
                             "CARRUSEL"
@@ -1222,30 +1193,19 @@ setTimeout(() => {
 
 
                     /*
-                     * ABRIR
-                     *
-                     * Zona:
-                     *
                      * X: 780 - 1090
                      * Y: 745 - 870
-                     *
-                     * GIF 6
-                     * ↓
-                     * GIF 7
                      */
 
                     if (
 
                         x1920 >= 780 &&
-
                         x1920 <= 1090 &&
 
                         y1080 >= 745 &&
-
                         y1080 <= 870
 
                     ) {
-
 
                         console.log(
                             "ABRIR CARTITA"
@@ -1275,30 +1235,19 @@ setTimeout(() => {
 
 
                     /*
-                     * BOTÓN SORPRESA
-                     *
-                     * Zona:
-                     *
                      * X: 810 - 1120
                      * Y: 725 - 850
-                     *
-                     * GIF 13
-                     * ↓
-                     * GIF 14
                      */
 
                     if (
 
                         x1920 >= 810 &&
-
                         x1920 <= 1120 &&
 
                         y1080 >= 725 &&
-
                         y1080 <= 850
 
                     ) {
-
 
                         console.log(
                             "SORPRESA (GIF 13)"
@@ -1328,30 +1277,19 @@ setTimeout(() => {
 
 
                     /*
-                     * BOTÓN CARRUSEL
-                     *
-                     * Zona:
-                     *
                      * X: 860 - 1170
                      * Y: 730 - 855
-                     *
-                     * GIF 18
-                     * ↓
-                     * GIF 19
                      */
 
                     if (
 
                         x1920 >= 860 &&
-
                         x1920 <= 1170 &&
 
                         y1080 >= 730 &&
-
                         y1080 <= 855
 
                     ) {
-
 
                         console.log(
                             "CARRUSEL (GIF 18)"
@@ -1371,7 +1309,7 @@ setTimeout(() => {
 
 
                 /* ==================================================
-                   GIF 7 — SIN ACCIÓN POR AHORA
+                   GIF 7 — SIN ACCIÓN
                    ================================================== */
 
                 if (
@@ -1389,7 +1327,7 @@ setTimeout(() => {
 
 
                 /* ==================================================
-                   GIF 14 — SIN ACCIÓN POR AHORA
+                   GIF 14 — SIN ACCIÓN
                    ================================================== */
 
                 if (
@@ -1407,7 +1345,7 @@ setTimeout(() => {
 
 
                 /* ==================================================
-                   GIF 19 — SIN ACCIÓN POR AHORA
+                   GIF 19 — SIN ACCIÓN
                    ================================================== */
 
                 if (
