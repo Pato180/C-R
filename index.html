@@ -712,6 +712,24 @@
 
 
         /* ==================================================
+           CARTITA (GIF 7 A GIF 12)
+
+           Se navega con toques:
+           lado derecho = siguiente
+           lado izquierdo = anterior
+           ================================================== */
+
+        const escenasCartita = [
+            "gif-7",
+            "gif-8",
+            "gif-9",
+            "gif-10",
+            "gif-11",
+            "gif-12"
+        ];
+
+
+        /* ==================================================
            AVANCE AUTOMÁTICO ENTRE ESCENAS
 
            Cada escena de esta lista se queda en pantalla
@@ -721,28 +739,23 @@
 
         const avanceAutomatico = {
 
-            /* Cartita: 10 segundos cada una */
-
-            "gif-7":  { siguiente: "gif-8",  tiempo: 10000 },
-            "gif-8":  { siguiente: "gif-9",  tiempo: 10000 },
-            "gif-9":  { siguiente: "gif-10", tiempo: 10000 },
-            "gif-10": { siguiente: "gif-11", tiempo: 10000 },
-            "gif-11": { siguiente: "gif-12", tiempo: 10000 },
+            /* Cartita (7 a 12): SIN avance automático, se navega con toques */
 
 
-            /* Sorpresa: 7 segundos cada una */
 
-            "gif-14": { siguiente: "gif-15", tiempo: 7000 },
-            "gif-15": { siguiente: "gif-16", tiempo: 7000 },
-            "gif-16": { siguiente: "gif-17", tiempo: 7000 },
+            /* Sorpresa: 6 segundos cada una */
+
+            "gif-14": { siguiente: "gif-15", tiempo: 6000 },
+            "gif-15": { siguiente: "gif-16", tiempo: 6000 },
+            "gif-16": { siguiente: "gif-17", tiempo: 6000 },
 
 
-            /* Carrusel: 6 segundos cada una */
+            /* Carrusel: 5 segundos cada una */
 
-            "gif-19": { siguiente: "gif-20", tiempo: 6000 },
-            "gif-20": { siguiente: "gif-21", tiempo: 6000 },
-            "gif-21": { siguiente: "gif-22", tiempo: 6000 },
-            "gif-22": { siguiente: "gif-23", tiempo: 6000 }
+            "gif-19": { siguiente: "gif-20", tiempo: 5000 },
+            "gif-20": { siguiente: "gif-21", tiempo: 5000 },
+            "gif-21": { siguiente: "gif-22", tiempo: 5000 },
+            "gif-22": { siguiente: "gif-23", tiempo: 5000 }
 
         };
 
@@ -1833,17 +1846,55 @@
 
 
                 /* ==================================================
-                   GIF 7 — SIN ACCIÓN
+                   GIF 7 A GIF 12 — CARTITA
+
+                   Toque a la DERECHA: siguiente
+                   Toque a la IZQUIERDA: anterior
+
+                   (El botón BACK del GIF 12 se revisa
+                   antes, en su propio bloque.)
                    ================================================== */
 
                 if (
-                    escenaActual ===
-                    "gif-7"
+                    escenasCartita.includes(escenaActual)
                 ) {
 
-                    console.log(
-                        "GIF 7 — sin acción"
-                    );
+                    const posicion =
+                        escenasCartita.indexOf(escenaActual);
+
+
+                    if (x1920 >= 960) {
+
+                        if (posicion < escenasCartita.length - 1) {
+
+                            console.log(
+                                "CARTITA — SIGUIENTE"
+                            );
+
+
+                            mostrarEscena(
+                                escenasCartita[posicion + 1]
+                            );
+
+                        }
+
+                    } else {
+
+                        if (posicion > 0) {
+
+                            console.log(
+                                "CARTITA — ANTERIOR"
+                            );
+
+
+                            mostrarEscena(
+                                escenasCartita[posicion - 1]
+                            );
+
+                        }
+
+                    }
+
 
                     return;
 
